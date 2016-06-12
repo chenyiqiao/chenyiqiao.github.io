@@ -1,0 +1,827 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="EcmaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ChenYiQiao's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="(原文：know thy reference - kangax)
+不久前的某一个星期天清晨，我躺床上看 HackerNews，有一篇叫「This in JavaScript」的文章，我稍微扫了两眼。不出意外，就是函数调用、方法调用、显式绑定、构造函数实例化这档子事。这篇文章特别长，我越看就越觉得，这一大堆的解释和例子会给一个不了解 this 机制的人带来多大的心理阴影啊。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解引用">
+<meta property="og:url" content="http://yoursite.com/2016/05/30/know-the-reference/index.html">
+<meta property="og:site_name" content="ChenYiQiao's Blog">
+<meta property="og:description" content="(原文：know thy reference - kangax)
+不久前的某一个星期天清晨，我躺床上看 HackerNews，有一篇叫「This in JavaScript」的文章，我稍微扫了两眼。不出意外，就是函数调用、方法调用、显式绑定、构造函数实例化这档子事。这篇文章特别长，我越看就越觉得，这一大堆的解释和例子会给一个不了解 this 机制的人带来多大的心理阴影啊。">
+<meta property="og:updated_time" content="2016-06-12T08:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解引用">
+<meta name="twitter:description" content="(原文：know thy reference - kangax)
+不久前的某一个星期天清晨，我躺床上看 HackerNews，有一篇叫「This in JavaScript」的文章，我稍微扫了两眼。不出意外，就是函数调用、方法调用、显式绑定、构造函数实例化这档子事。这篇文章特别长，我越看就越觉得，这一大堆的解释和例子会给一个不了解 this 机制的人带来多大的心理阴影啊。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/30/know-the-reference/"/>
+
+  <title> 理解引用 | ChenYiQiao's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ChenYiQiao's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                理解引用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-30T19:36:11+08:00" content="2016-05-30">
+              2016-05-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(原文：<a href="http://perfectionkills.com/know-thy-reference/" target="_blank" rel="external">know thy reference</a> - <em>kangax</em>)</p>
+<p>不久前的某一个星期天清晨，我躺床上看 HackerNews，有一篇叫「This in JavaScript」的文章，我稍微扫了两眼。不出意外，就是函数调用、方法调用、显式绑定、构造函数实例化这档子事。这篇文章特别长，我越看就越觉得，这一大堆的解释和例子会给一个不了解 this 机制的人带来多大的心理阴影啊。</p>
+<a id="more"></a>
+<p>我想起来几年前我第一次看DC的「JavaScript The Good Parts」，当时看完书里的相关总结之后觉得无比清晰，书里简要地列出了这几条：</p>
+<blockquote>
+<p>The <code>this</code> parameter is very important in object oriented programming, and its value is <strong>determined by the invocation pattern</strong>.There are <strong>four patterns of invocation</strong> in JavaScript: the <strong>method invocation</strong> pattern,the <strong>function invocation</strong> pattern,the <strong>constructor invocation</strong> pattern and the <strong>apply invocation pattern</strong>.The patterns differ in how the bonus parameter this is initialized.</p>
+</blockquote>
+<p>只由调用方式决定，而且只有四种情况。看看，这说得多简单。</p>
+<p>于是我去评论里看有没有人说 HackerNews 的这篇文章讲得太复杂了。果然，很多人都搬出了「JavaScript The Good Parts」里的总结，其中一个人提炼了一下：</p>
+<ul>
+<li>The keyword <code>this</code> refers to whatever is left of the dot at call-time.<br></li>
+<li>If there’s nothing to the left of the dot, then <code>this</code> refers to the root scope(e.g. Window)</li>
+<li>A few functions change the behavior of <code>this</code> - bind, call and apply</li>
+<li>The keyword <code>new</code> binds this to the object just created</li>
+</ul>
+<p>简直精辟。但是我注意到里面的一句话－<em>“whatever is left of the dot at call-time”</em>。乍一看很有道理嘛，比方说<code>foo.bar()</code>,<code>this</code>指向<code>foo</code>;又比方说<code>foo.bar.baz()</code>,<code>this</code>指向<code>foo.bar</code>。但是<code>(f = foo.bar)()</code>呢？在这里所谓的「Whatever is left of the dot at call-time」就是<code>foo</code>，那<code>this</code>就指向<code>foo</code>咯？</p>
+<p>为了拯救前端程序员于水火之中，我留言说，所谓的「句号左边的东西」可能没这么简单，要真的理解<code>this,</code>你可能需要理解引用和它的<code>base values</code>。</p>
+<p>也是这一次经历我才真的意识到引用的概念其实很少被提到。我去搜了一下”JavaScript reference”，结果出来一些关于”pass-by-reference vs. pass-by-value”的讨论。不行，我得出来救场了。</p>
+<p>这就是为什么我要来写这篇博客。</p>
+<p>我会解释 ECMAScript 里面神秘的引用，一旦你理解了引用，你就会明白通过引用来了解<code>this</code>的绑定是多么轻松，你也会发现读 ECMAScript 的规范容易得多了。</p>
+<h3 id="关于引用"><a href="#关于引用" class="headerlink" title="关于引用"></a>关于引用</h3><p>老实说，看到关于引用的讨论那么少我也多多少少可以理解，毕竟这也并不是语言本身的一部分。引用只是一种机制，<a href="https://es5.github.io/#x8.7" target="_blank" rel="external">用来描述ECMAScript里的特定行为</a>。它对于解释引擎的实现至关重要，但是它们在代码里是看不见摸不着的。</p>
+<p>当然，理解它对于写代码完完全全是必要的。</p>
+<p>回到我们之前的问题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foo.bar()</span><br><span class="line">(f = foo.bar)()</span><br></pre></td></tr></table></figure>
+<p>到底为什么第一个的<code>this</code>指向<code>foo</code>,而第二个指向全局对象呢？</p>
+<p>你可能会说，<em>“括号左边的表达式里面完成了一次对 f 的赋值，赋值完了之后就相当于调用 f() ,这样的话就是一次函数调用，而不是方法调用了。”</em></p>
+<p>好的，那这个呢：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>, foo.bar)()</span><br></pre></td></tr></table></figure>
+<p><em>“噢，这是个圆括号运算符嘛！它完成从左边到右边的求值，所以它肯定和 foo.bar() 是一样的，所以它的<code>this</code>指向<code>foo</code>。”</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">(<span class="number">1</span>, foo.bar)() <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p><em>“呃……真是奇怪啊”</em></p>
+<p>那这个呢：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(foo.bar)()</span><br></pre></td></tr></table></figure>
+<p><em>“呃，考虑到上一个例子，肯定也是<code>undefined</code>吧，应该是圆括号搞了什么鬼。”</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(foo.bar)()  <span class="comment">//&#123;bar: function()&#123; ... &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><em>“好吧……我服了。”</em></p>
+<h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p>ECMAScript把引用定义成「resolved name binding」。这是由三个部分组成的抽象实体 － <code>base</code>, <code>name</code>和<code>strict flag</code>，第三个好懂，现在咱们聊前两个就够了。</p>
+<p>创建引用有两种情况：</p>
+<ul>
+<li><b>Identifier resolution</b></li>
+<li><b>property access</b></li>
+</ul>
+<p>比方说吧，<code>foo</code>创建了一个引用，<code>foo.bar</code>也创建了一个引用。而像<code>1</code>, <code>&quot;foo&quot;</code>, <code>/x/</code>, <code>{ }</code>, <code>[ 1,2,3 ]</code>这些字面量值和函数表达式<code>(function(){})</code>就没有。</p>
+<table>
+<thead>
+<tr>
+<th>Example</th>
+<th style="text-align:center">Reference?</th>
+<th style="text-align:center">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“foo”</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>123</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>/x/</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>({})</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>(function(){})</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>foo</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Could be unresolved reference if <code>foo</code> is not defined</td>
+</tr>
+<tr>
+<td>foo.bar</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Property reference</td>
+</tr>
+<tr>
+<td>(123).toString</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Property reference</td>
+</tr>
+<tr>
+<td>(function(){}).toString</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Property reference</td>
+</tr>
+<tr>
+<td>(1, foo.bar)()</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">Already evaluated, BUT see grouping operator exception</td>
+</tr>
+<tr>
+<td>(f = foo.bar)()</td>
+<td style="text-align:center">NO</td>
+<td style="text-align:center">Already evaluated, BUT see grouping operator exception</td>
+</tr>
+<tr>
+<td>(foo)</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Grouping operator does not evaluate reference</td>
+</tr>
+<tr>
+<td>(foo.bar)</td>
+<td style="text-align:center">YES</td>
+<td style="text-align:center">Grouping operator does not evaluate reference</td>
+</tr>
+</tbody>
+</table>
+<p>先别管后面四个，我们待会再看。</p>
+<p>每次一个引用创建的时候，它的组成部分<code>base</code>,<code>name</code>,<code>strict</code>都被赋上值。<code>name</code>就是解析的标识符或者属性名，<code>base</code>就是属性对象或者环境对象。</p>
+<p>可能把引用理解成一个没有原型的JavaScript对象会比较好，它就只有<code>base</code>, <code>name</code>和<code>strict</code>三个属性。下面举两个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//when foo is defined earlier</span></span><br><span class="line"></span><br><span class="line">foo</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">  base: Environment,</span><br><span class="line">  name: <span class="string">"foo"</span>,</span><br><span class="line">  strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line">----------------</span><br><span class="line">foo.bar</span><br><span class="line"></span><br><span class="line"><span class="comment">//这就是所谓的「Property Reference」</span></span><br><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">  base: foo,</span><br><span class="line">  name: <span class="string">"bar"</span>,</span><br><span class="line">  strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有第三种情况，即不可解析引用。如果在作用域里找不到标识符，引用的<code>base</code>就会设为<code>undefined</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//when foo is not defined</span></span><br><span class="line"></span><br><span class="line">foo</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">  base: <span class="literal">undefined</span>,</span><br><span class="line">  name: <span class="string">"foo"</span>,</span><br><span class="line">  strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你肯定见过，解析不了的引用可能会导致引用错误－(“foo is not defined”).</p>
+<p>本质上来说，引用就是一种代表名称绑定的简单机制，它把对象的属性解析和变量解析抽象出一个类似对象的数据结构:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reference = &#123;</span><br><span class="line">  base: <span class="built_in">Object</span> or Environment,</span><br><span class="line">  name: name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们知道ECMAScript底层做了什么了，但是这对解释<code>this</code>的指向有什么用呢？</p>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p>看看<a href="https://es5.github.io/#x11.2.3" target="_blank" rel="external">函数调用的时候发生了什么</a>：</p>
+<ol>
+<li>Let ref be the result of evaluating MemberExpression.<br></li>
+<li>Let func be GetValue(ref).<br></li>
+<li>Let argList be the result of evaluating Arguments, producing an internal list of argument values (see 11.2.4).<br></li>
+<li>If Type(func) is not Object, throw a TypeError exception.<br></li>
+<li>If IsCallable(func) is false, throw a TypeError exception.<br></li>
+<li><b>If Type(ref) is Reference, then</b><br><ol>
+<li><b>If IsPropertyReference(ref) is true, then</b><br><ol>
+<li><b>Let thisValue be GetBase(ref).</b><br></li>
+</ol>
+</li>
+<li><b>Else, the base of ref is an Environment Record</b><br><ol>
+<li><b>Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).</b><br></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><b>Else, Type(ref) is not Reference.</b><br><ol>
+<li><b>Let thisValue be undefined.</b><br></li>
+</ol>
+</li>
+<li>Return the result of calling the [[Call]] internal method on func, providing thisValue as the this value and providing the list argList as the argument values.</li>
+</ol>
+<p>加粗的第六步基本上就解释了DC四条里面的1、2两条:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//foo.bar()</span><br><span class="line">- `foo.bar`是个属性引用吗？</span><br><span class="line">- 是的</span><br><span class="line">- 那取它的base，也就是`foo`作为`this`吧</span><br><span class="line"></span><br><span class="line">//foo()</span><br><span class="line">- `foo`是个属性引用吗？</span><br><span class="line">- 不是</span><br><span class="line">- 那你的base就是undefined</span><br><span class="line"></span><br><span class="line">//(function()&#123;&#125;)()</span><br><span class="line">- 什么？你连引用都不是啊，那不用看了，undefined</span><br></pre></td></tr></table></figure>
+<h3 id="赋值，逗号，圆括号运算符"><a href="#赋值，逗号，圆括号运算符" class="headerlink" title="赋值，逗号，圆括号运算符"></a>赋值，逗号，圆括号运算符</h3><p>有了前面的了解，我们看看能不能解释得了下面这几个函数调用的<code>this</code>指向。</p>
+<ul>
+<li>(f = foo.bar)()</li>
+<li>(1, foo.bar)()</li>
+<li>(foo.bar)()</li>
+</ul>
+<p>从第一个赋值运算说起，括号里是一个简单赋值操作，如果我们看看<a href="https://es5.github.io/#x11.13.1" target="_blank" rel="external">简单赋值</a>做了些什么的话，我们可能可以看出点端倪：</p>
+<ol>
+<li>Let lref be the result of evaluating LeftHandSideExpression.</li>
+<li>Let rref be the result of evaluating AssignmentExpression.</li>
+<li><b>Let rval be GetValue(rref).</b></li>
+<li>Throw a SyntaxError exception if the following conditions are all true:<ul>
+<li>Type(lref) is Reference is true</li>
+<li>IsStrictReference(lref) is true</li>
+<li>Type(GetBase(lref)) is Environment Record</li>
+<li>GetReferencedName(lref) is either “eval” or “arguments”</li>
+</ul>
+</li>
+<li>Call PutValue(lref, rval).</li>
+<li>Return rval.</li>
+</ol>
+<p>注意到右边的表达式在赋值之前通过内部的<code>GetValue()</code>求值。在我们的例子里面，<code>foo.bar</code>引用被转换成了一个函数对象，那么以<em>非引用方式</em>调用函数的话，<code>this</code>就指向了<code>undefined</code>。所以深入剖析的话，比起来<code>foo.bar()</code>,<code>(f = foo.bar)()</code>其实更像是<code>(function(){})()</code>。就是说，它是个求过值的表达式，而不是一个拥有<code>base</code>的引用。</p>
+<p>第二个逗号运算就类似了：</p>
+<ol>
+<li>Let lref be the result of evaluating Expression.</li>
+<li>Call GetValue(lref).</li>
+<li>Let rref be the result of evaluating AssignmentExpression.</li>
+<li><b>Return GetValue(rref).</b></li>
+</ol>
+<p>通过了<code>GetValue</code>，引用转换成了函数对象，<code>this</code>指向了<code>undefined</code>.</p>
+<p>最后是圆括号运算符：</p>
+<ol>
+<li>Return the result of evaluating Expression. This may be of type Reference.</li>
+<li>NOTE This algorithm does not apply GetValue to the result of evaluating Expression. The principal motivation for this is so that operators such as delete and typeof may be applied to parenthesised expressions.</li>
+</ol>
+<p>那很明白了，圆括号运算符没有对引用进行转换，这也就是为什么它的<code>this</code>指向了<code>foo</code>.</p>
+<h3 id="typeof运算符"><a href="#typeof运算符" class="headerlink" title="typeof运算符"></a>typeof运算符</h3><p>既然都聊到这儿了，干脆聊一聊别的。看看typeof运算符的说法：</p>
+<ol>
+<li>Let val be the result of evaluating UnaryExpression.</li>
+<li>If Type(val) is Reference, then<ol>
+<li><b>If IsUnresolvableReference(val) is true, return “undefined”.</b></li>
+<li>Let val be GetValue(val).</li>
+</ol>
+</li>
+<li>Return a String determined by Type(val) according to Table 20.</li>
+</ol>
+<p>这也就是为什么我们对一个无法解析的引用使用<code>typeof</code>操作符的时候并不会报错。但是如果不用<code>typeof</code>运算符，直接做一个声明呢：</p>
+<p>Expression Statement:</p>
+<ol>
+<li>Let exprRef be the result of evaluating Expression.</li>
+<li>Return (normal, <b>GetValue(exprRef)</b>, empty).</li>
+</ol>
+<p>GetValue():</p>
+<ol>
+<li>If Type(V) is not Reference, return V.</li>
+<li>Let base be the result of calling GetBase(V).</li>
+<li><b>If IsUnresolvableReference(V), throw a ReferenceError exception.</b></li>
+</ol>
+<p>看到了吧，过不了<code>GetValue</code>这一关，所以说出现了没法解析的声明直接就报错了。</p>
+<h3 id="delete运算符"><a href="#delete运算符" class="headerlink" title="delete运算符"></a>delete运算符</h3><p>长话短说：</p>
+<ul>
+<li>如果不是个引用，返回<code>true</code>(delete 1,delete /x/)</li>
+<li>如果是没法解析的引用(delete iDontExist)<ul>
+<li>严格模式，报错</li>
+<li>否则返回<code>true</code></li>
+</ul>
+</li>
+<li>如果确实是个属性引用，那就删了它,返回<code>true</code></li>
+<li>如果是全局对象作为<code>base</code>的属性<ul>
+<li>严格模式，报错</li>
+<li>否则，删除，返回<code>true</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/EcmaScript/" rel="tag">#EcmaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/30/build-a-noteApp-with-Vue-js-Firebase/" rel="next" title="用 Vue.js 和 Firebase 构建一个笔记应用">
+                <i class="fa fa-chevron-left"></i> 用 Vue.js 和 Firebase 构建一个笔记应用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/02/gitbook-doc/" rel="prev" title="Gitbook 使用手册">
+                Gitbook 使用手册 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenyiqiao" />
+          <p class="site-author-name" itemprop="name">chenyiqiao</p>
+          <p class="site-description motion-element" itemprop="description">Less is more</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenyiqiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/chenyiqiao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于引用"><span class="nav-number">1.</span> <span class="nav-text">关于引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理论"><span class="nav-number">2.</span> <span class="nav-text">理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用"><span class="nav-number">3.</span> <span class="nav-text">函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值，逗号，圆括号运算符"><span class="nav-number">4.</span> <span class="nav-text">赋值，逗号，圆括号运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeof运算符"><span class="nav-number">5.</span> <span class="nav-text">typeof运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete运算符"><span class="nav-number">6.</span> <span class="nav-text">delete运算符</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenyiqiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

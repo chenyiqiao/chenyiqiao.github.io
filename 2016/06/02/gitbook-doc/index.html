@@ -1,0 +1,800 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="工具," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ChenYiQiao's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章基本上是 Gitbook Toolchain Doc 的翻译，后面还补上了关于怎么托管到 Github repo 上的内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gitbook 使用手册">
+<meta property="og:url" content="http://yoursite.com/2016/06/02/gitbook-doc/index.html">
+<meta property="og:site_name" content="ChenYiQiao's Blog">
+<meta property="og:description" content="这篇文章基本上是 Gitbook Toolchain Doc 的翻译，后面还补上了关于怎么托管到 Github repo 上的内容。">
+<meta property="og:updated_time" content="2016-06-12T08:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gitbook 使用手册">
+<meta name="twitter:description" content="这篇文章基本上是 Gitbook Toolchain Doc 的翻译，后面还补上了关于怎么托管到 Github repo 上的内容。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/02/gitbook-doc/"/>
+
+  <title> Gitbook 使用手册 | ChenYiQiao's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ChenYiQiao's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Gitbook 使用手册
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-02T15:51:39+08:00" content="2016-06-02">
+              2016-06-02
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章基本上是 <a href="http://toolchain.gitbook.com/" target="_blank" rel="external">Gitbook Toolchain Doc</a> 的翻译，后面还补上了关于怎么托管到 Github repo 上的内容。</p>
+<a id="more"></a>
+<h2 id="安装和起步"><a href="#安装和起步" class="headerlink" title="安装和起步"></a>安装和起步</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 全局安装</span><br><span class="line">$ npm install gitbook-cli -g</span><br><span class="line"></span><br><span class="line">// 创建一个 boilerplate</span><br><span class="line">$ gitbook init</span><br><span class="line"></span><br><span class="line">// 本地预览</span><br><span class="line">$ gitbook serve</span><br></pre></td></tr></table></figure>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>在运行<code>gitbook init</code>的时候会自动生成几个文件。所有在<code>SUMMARY.md</code>里面列出的 Markdown/Asciidoc 文件都会转换成 HTML 文件(以供相应的页面渲染)。支持多语言的书的目录结构稍微有点不同。其实就是在根目录下加一个<code>LANGS.md</code>，把不同语言的版本放到不同的文件夹下面。</p>
+<p>一个基本的 Gitbook 的目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── book.json</span><br><span class="line">├── README.md</span><br><span class="line">├── SUMMARY.md</span><br><span class="line">├── chapter-1/</span><br><span class="line">|   ├── README.md</span><br><span class="line">|   └── something.md</span><br><span class="line">└── chapter-2/</span><br><span class="line">    ├── README.md</span><br><span class="line">    └── something.md</span><br></pre></td></tr></table></figure>
+<p>这些文件的作用分别是：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>book.json</td>
+<td style="text-align:center">保存配置信息 (optional)</td>
+</tr>
+<tr>
+<td>README.md</td>
+<td style="text-align:center">书的封面介绍(required)</td>
+</tr>
+<tr>
+<td>SUMMARY.md</td>
+<td style="text-align:center">目录(optional)</td>
+</tr>
+<tr>
+<td>GLOSSARY.md</td>
+<td style="text-align:center">术语表(optional)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="静态文件和图片"><a href="#静态文件和图片" class="headerlink" title="静态文件和图片"></a>静态文件和图片</h3><p>静态文件指的是那些没有列在<code>SUMMARY.md</code>里面的文件。除非是列在忽略文件里面，否则静态文件直接拷贝到输出(也就是 md 文件，不会渲染成 HTML)。</p>
+<h3 id="忽略文件和文件夹"><a href="#忽略文件和文件夹" class="headerlink" title="忽略文件和文件夹"></a>忽略文件和文件夹</h3><p>Gitbook 会读取<code>.gitignore</code>,<code>.bookignore</code>和<code>.ignore</code>文件来获得应该要忽略的文件。格式就是常规的<code>.gitignore</code>的格式。</p>
+<h3 id="在项目的子文件夹下的书"><a href="#在项目的子文件夹下的书" class="headerlink" title="在项目的子文件夹下的书"></a>在项目的子文件夹下的书</h3><p>有时候书是给软件项目作文档用，一般就会把书放在项目的子目录下面(比如说放在<code>docs/</code>)。这种情况你可以配置<code>root</code>选项来告诉 Gitbook 上哪去找你的书：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── book.json</span><br><span class="line">└── docs/</span><br><span class="line">    ├── README.md</span><br><span class="line">    └── SUMMARY.md</span><br></pre></td></tr></table></figure>
+<p>在<code>book.json</code>里面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;root&quot;: &quot;./docs&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="SUMMARY-文件"><a href="#SUMMARY-文件" class="headerlink" title="SUMMARY 文件"></a>SUMMARY 文件</h2><p>Gitbook 用<code>SUMMARY.md</code>这个文件里定义书的章节结构，这个文件用来生成书的目录。这个文件的形式就是包含链接的列表。链接的标题就是章节的名字，链接本身指向对应的 md 文件。</p>
+<p>一个简单的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Summary</span><br><span class="line"></span><br><span class="line">* [Part I](part1/README.md)</span><br><span class="line">    * [Writing is nice](part1/writing.md)</span><br><span class="line">    * [GitBook is nice](part1/gitbook.md)</span><br><span class="line">* [Part II](part2/README.md)</span><br><span class="line">    * [We love feedback](part2/feedback_please.md)</span><br><span class="line">    * [Better tools for authors](part2/better_tools.md)</span><br></pre></td></tr></table></figure>
+<p>如果需要继续划分结构可以用 anchor 来充当小节:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Summary</span><br><span class="line"></span><br><span class="line">### Part I</span><br><span class="line"></span><br><span class="line">* [Writing is nice](part1/writing.md)</span><br><span class="line">* [GitBook is nice](part1/gitbook.md)</span><br><span class="line"></span><br><span class="line">### Part II</span><br><span class="line"></span><br><span class="line">* [We love feedback](part2/feedback_please.md)</span><br><span class="line">* [Better tools for authors](part2/better_tools.md)</span><br><span class="line"></span><br><span class="line">----</span><br><span class="line"></span><br><span class="line">* [Last part without title](part3/title.md)</span><br></pre></td></tr></table></figure>
+<p>一般情况下，用列表和列表嵌套就足以表达结构层次了。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>可以通过<code>book.json</code>来提供灵活的配置。</p>
+<h3 id="通用配置："><a href="#通用配置：" class="headerlink" title="通用配置："></a>通用配置：</h3><table>
+<thead>
+<tr>
+<th>配置属性</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root</td>
+<td style="text-align:center">包含书的相关文件的目录</td>
+</tr>
+<tr>
+<td>structure</td>
+<td style="text-align:center">指定 readme, summary, glossary 这些文件的路径。参考下面的<a href="###结构">结构</a></td>
+</tr>
+<tr>
+<td>title</td>
+<td style="text-align:center">书的标题，默认从 README 里面提取</td>
+</tr>
+<tr>
+<td>description</td>
+<td style="text-align:center">书的介绍，默认从 README 里面提取</td>
+</tr>
+<tr>
+<td>author</td>
+<td style="text-align:center">书的作者</td>
+</tr>
+<tr>
+<td>isbn</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>language</td>
+<td style="text-align:center">语言，默认是<code>en</code></td>
+</tr>
+<tr>
+<td>direction</td>
+<td style="text-align:center">可以是 rtl 或者 ltr，默认值取决于语言</td>
+</tr>
+<tr>
+<td>gitbook</td>
+<td style="text-align:center">Gitbook 的版本</td>
+</tr>
+</tbody>
+</table>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件及其配置在<code>book.json</code>里面设置，举个例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&quot;plugins&quot;: [&quot;edit-link&quot;, &quot;prism&quot;, &quot;-highlight&quot;, &quot;github&quot;],</span><br><span class="line">&quot;pluginsConfig&quot;: &#123;</span><br><span class="line">  &quot;edit-link&quot;: &#123;</span><br><span class="line">    &quot;base&quot;: &quot;https://github.com/chenyiqiao/selfmade-gitbook/blob/master&quot;,</span><br><span class="line">    &quot;label&quot;: &quot;Edit This Page&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;github&quot;: &#123;</span><br><span class="line">    &quot;url&quot;: &quot;https://github.com/chenyiqiao/selfmade-gitbook&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>默认情况下，根目录下的诸如<code>README.md</code>和<code>SUMMARY.md</code>这些文件都有着其对应的目的。不过，也可以手动配置别的名字：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>structure.readme</td>
+<td style="text-align:center">介绍，默认是<code>README.md</code></td>
+</tr>
+<tr>
+<td>structure.summary</td>
+<td style="text-align:center">目录，默认是<code>SUMMARY.md</code></td>
+</tr>
+<tr>
+<td>structure.glossary</td>
+<td style="text-align:center">术语表，默认是<code>GLOSSARY.md</code></td>
+</tr>
+<tr>
+<td>structure.languages</td>
+<td style="text-align:center">语言，默认是<code>LANGS.md</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="PDF-选项"><a href="#PDF-选项" class="headerlink" title="PDF 选项"></a>PDF 选项</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pdf.pageNumbers</td>
+<td style="text-align:center">每一页页脚加上页数(默认 true)</td>
+</tr>
+<tr>
+<td>pdf.fontSize</td>
+<td style="text-align:center">字体大小，默认是 12</td>
+</tr>
+<tr>
+<td>pdf.fontFamily</td>
+<td style="text-align:center">字体，默认是<code>Arial</code></td>
+</tr>
+<tr>
+<td>pdf.paperSize</td>
+<td style="text-align:center">纸张大小，默认是 a4</td>
+</tr>
+<tr>
+<td>pdf.margin.top</td>
+<td style="text-align:center">上外边距，默认56</td>
+</tr>
+<tr>
+<td>pdf.margin.bottom</td>
+<td style="text-align:center">下外边距，默认56</td>
+</tr>
+<tr>
+<td>pdf.margin.right</td>
+<td style="text-align:center">右外边距，默认62</td>
+</tr>
+<tr>
+<td>pdf.margin.left</td>
+<td style="text-align:center">左外边距，默认62</td>
+</tr>
+</tbody>
+</table>
+<h2 id="术语表"><a href="#术语表" class="headerlink" title="术语表"></a>术语表</h2><p>在<code>GLOSSARY.md</code>这个文件里面，我们可以给一些术语加上定义。当书的章节里面出现了定义过的术语的时候，就会出现高亮。</p>
+<p><code>GLOSSARY.md</code>的格式是一个<code>h2</code>标题带一段相关的描述：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## Term</span><br><span class="line">Definition for this term</span><br><span class="line"></span><br><span class="line">## Another term</span><br><span class="line">With it&apos;s definition, this can contain bold text</span><br><span class="line">and all other kinds of inline markup ...</span><br></pre></td></tr></table></figure>
+<h2 id="多语言"><a href="#多语言" class="headerlink" title="多语言"></a>多语言</h2><p>通过在根目录下添加一个<code>LANGS.md</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Languages</span><br><span class="line"></span><br><span class="line">* [English](en/)</span><br><span class="line">* [French](fr/)</span><br><span class="line">* [Español](es/)</span><br></pre></td></tr></table></figure>
+<p>每个子文件夹里面也可以包含<code>book.json</code>文件，相应的配置会覆盖/扩展根目录下<code>book.json</code>的配置。但是这里不能配置插件，插件只能在根目录下的<code>book.json</code>配置。</p>
+<h2 id="AsciiDoc"><a href="#AsciiDoc" class="headerlink" title="AsciiDoc"></a>AsciiDoc</h2><p>除了 md 之外，Gitbook 还支持 asciiDoc 的格式。相关的文档可以参考 <a href="http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/" target="_blank" rel="external">AsciiDoc Syntax Quick Reference</a>。</p>
+<p>和 md 一样，Gitbook 用一些特殊的文件来<br>描述书的特征：<code>README.adoc</code>,<code>SUMMARY.adoc</code>,<code>LANGS.adoc</code>,<code>GLOSSARY.adoc</code>。</p>
+<p>举几个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// SUMMARY.adoc</span><br><span class="line"></span><br><span class="line">= Summary</span><br><span class="line"></span><br><span class="line">. link:chapter-1/README.adoc[Chapter 1]</span><br><span class="line">.. link:chapter-1/ARTICLE1.adoc[Article 1]</span><br><span class="line">.. link:chapter-1/ARTICLE2.adoc[Article 2]</span><br><span class="line">... link:chapter-1/ARTICLE-1-2-1.adoc[Article 1.2.1]</span><br><span class="line">. link:chapter-2/README.adoc[Chapter 2]</span><br><span class="line">. link:chapter-3/README.adoc[Chapter 3]</span><br><span class="line">. link:chapter-4/README.adoc[Chapter 4]</span><br><span class="line">.. Unfinished article</span><br><span class="line">. Unfinished Chapter</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">// LANGS.adoc</span><br><span class="line"></span><br><span class="line">= Languages</span><br><span class="line"></span><br><span class="line">. link:en/[English]</span><br><span class="line">. link:fr/[French]</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">// GLOSSARY.adoc</span><br><span class="line">= Glossary</span><br><span class="line"></span><br><span class="line">== Magic</span><br><span class="line"></span><br><span class="line">Sufficiently advanced technology, beyond the understanding of the</span><br><span class="line">observer producing a sense of wonder.</span><br><span class="line"></span><br><span class="line">== PHP</span><br><span class="line"></span><br><span class="line">A popular web programming language, used by many large websites such</span><br><span class="line">as Facebook. Rasmus Lerdorf originally created PHP in 1994 to power</span><br><span class="line">his personal homepage (PHP originally stood for &quot;Personal Home Page&quot;</span><br><span class="line">but now stands for &quot;PHP: Hypertext Preprocessor&quot;).</span><br></pre></td></tr></table></figure>
+<h2 id="生成-eBooks-和-PDFs"><a href="#生成-eBooks-和-PDFs" class="headerlink" title="生成 eBooks 和 PDFs"></a>生成 eBooks 和 PDFs</h2><p>Gitbook 可以生成网站，也可以生成电子书格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Generate a PDF file</span><br><span class="line">$ gitbook pdf ./ ./mybook.pdf</span><br><span class="line"></span><br><span class="line"># Generate an ePub file</span><br><span class="line">$ gitbook epub ./ ./mybook.epub</span><br><span class="line"></span><br><span class="line"># Generate a Mobi file</span><br><span class="line">$ gitbook mobi ./ ./mybook.mobi</span><br></pre></td></tr></table></figure>
+<p>注意转换成电子书需要<code>ebook-convert</code>。</p>
+<h2 id="插件-1"><a href="#插件-1" class="headerlink" title="插件"></a>插件</h2><p>通过插件，我们可以在书里面加上数学公式，Google Analytic 等等。可以在 <a href="https://plugins.gitbook.com/" target="_blank" rel="external">plugins.gitbook.com</a> 找到想要的插件。</p>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>首先在<code>book.json</code>里面指定你需要用的插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;plugins&quot;: [&quot;myPlugin&quot;, &quot;anotherPlugin&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后运行<code>gitbook install</code>即可把指定的插件下载下来。</p>
+<h3 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h3><p>有的插件需要提供参数配置，这些参数在<code>book.json</code>的<code>pluginsConfig</code>字段中给出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;pluginsConfig&quot;: &#123;</span><br><span class="line">  &quot;edit-link&quot;: &#123;</span><br><span class="line">    &quot;base&quot;: &quot;https://github.com/chenyiqiao/selfmade-gitbook/blob/master&quot;,</span><br><span class="line">    &quot;label&quot;: &quot;Edit This Page&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;github&quot;: &#123;</span><br><span class="line">    &quot;url&quot;: &quot;https://github.com/chenyiqiao/selfmade-gitbook&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有更多关于插件的 <a href="http://toolchain.gitbook.com/plugins/" target="_blank" rel="external">文档</a>，包括怎么自己写插件。但是目前暂时还用不着，有需要了再看。</p>
+<h2 id="把内容托管在-Github-上"><a href="#把内容托管在-Github-上" class="headerlink" title="把内容托管在 Github 上"></a>把内容托管在 Github 上</h2><p>如果希望别人也可以参与修改和编写，那么把内容托管在 Github 上显然是最好的选择。成功地和 Github repo 建立起联系之后，Github repo 的修改都会触发书的改变。</p>
+<p>集成到 Github 需要三步：</p>
+<ul>
+<li>建立 Permission</li>
+<li>把书链接到一个 Github 仓库</li>
+<li>设置 webhooks</li>
+</ul>
+<ol>
+<li><p>建立 Permission<br>要把 Github 集成进来，首先要授权 Gitbook 访问你的 Github账号。你需要在 <a href="https://www.gitbook.com/settings" target="_blank" rel="external">account settings</a> 里面完成设置。</p>
+</li>
+<li><p>把书连接到一个 Github repo<br>在你的书的设置页面，填上要连接的 Github repo 的信息：<code>&lt;github-username&gt;/&lt;github-repository-name&gt;</code>。当然了，在此之前你需要新建一个仓库。</p>
+</li>
+<li><p>设置 webhooks<br>最后一步要对你的仓库进行配置，然后你的仓库一旦更新了，Gitbook 就会得到通知，进而修改书的内容。具体的操作就是在仓库的设置里面找到<code>Webhooks&amp;services</code>，选择 addhooks，把书对应的 URL 填进去。这样一来，一旦仓库有了 Push 事件，Gitbook 就会得到通知。完了之后，可以去 check webhooks 看是不是设置成功了。</p>
+</li>
+</ol>
+<p>设置成功了之后，我们可以在 Github 仓库管理内容，每次仓库有了新的 push，书就会有对应的更新。</p>
+<p>参考：</p>
+<ul>
+<li><a href="http://toolchain.gitbook.com/" target="_blank" rel="external">ToolChain.gitbook</a></li>
+<li><a href="https://help.gitbook.com/github/can-i-host-on-github.html" target="_blank" rel="external">FAQ: Can I host my content on Github?</a></li>
+<li><a href="https://help.gitbook.com/books/how-can-i-use-git.html" target="_blank" rel="external">FAQ: How can I use git to update book?</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag">#工具</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/30/know-the-reference/" rel="next" title="理解引用">
+                <i class="fa fa-chevron-left"></i> 理解引用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/03/tools-md/" rel="prev" title="锤子工作流">
+                锤子工作流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenyiqiao" />
+          <p class="site-author-name" itemprop="name">chenyiqiao</p>
+          <p class="site-description motion-element" itemprop="description">Less is more</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenyiqiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/chenyiqiao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装和起步"><span class="nav-number">1.</span> <span class="nav-text">安装和起步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">2.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态文件和图片"><span class="nav-number">2.1.</span> <span class="nav-text">静态文件和图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略文件和文件夹"><span class="nav-number">2.2.</span> <span class="nav-text">忽略文件和文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在项目的子文件夹下的书"><span class="nav-number">2.3.</span> <span class="nav-text">在项目的子文件夹下的书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUMMARY-文件"><span class="nav-number">3.</span> <span class="nav-text">SUMMARY 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用配置："><span class="nav-number">4.1.</span> <span class="nav-text">通用配置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件"><span class="nav-number">4.2.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">4.3.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PDF-选项"><span class="nav-number">4.4.</span> <span class="nav-text">PDF 选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#术语表"><span class="nav-number">5.</span> <span class="nav-text">术语表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多语言"><span class="nav-number">6.</span> <span class="nav-text">多语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsciiDoc"><span class="nav-number">7.</span> <span class="nav-text">AsciiDoc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-eBooks-和-PDFs"><span class="nav-number">8.</span> <span class="nav-text">生成 eBooks 和 PDFs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件-1"><span class="nav-number">9.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">9.1.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置插件"><span class="nav-number">9.2.</span> <span class="nav-text">配置插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把内容托管在-Github-上"><span class="nav-number">10.</span> <span class="nav-text">把内容托管在 Github 上</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenyiqiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

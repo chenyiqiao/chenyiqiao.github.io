@@ -1,0 +1,674 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Vue.js," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ChenYiQiao's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前几天翻译了基于这篇博客的文章：用 Vuex 构建一个笔记应用。在此基础上我对它做了一些更新：
+
+把数据同步到 Firebase 上，不会每次关掉浏览器就丢失数据。
+加了笔记检索功能
+为保证代码整洁，加上了 eslint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Vue.js 和 Firebase 构建一个笔记应用">
+<meta property="og:url" content="http://yoursite.com/2016/05/30/build-a-noteApp-with-Vue-js-Firebase/index.html">
+<meta property="og:site_name" content="ChenYiQiao's Blog">
+<meta property="og:description" content="前几天翻译了基于这篇博客的文章：用 Vuex 构建一个笔记应用。在此基础上我对它做了一些更新：
+
+把数据同步到 Firebase 上，不会每次关掉浏览器就丢失数据。
+加了笔记检索功能
+为保证代码整洁，加上了 eslint">
+<meta property="og:image" content="http://yoursite.com/resources/notes-app/1.gif">
+<meta property="og:image" content="http://yoursite.com/resources/notes-app/2.gif">
+<meta property="og:updated_time" content="2016-06-12T08:29:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 Vue.js 和 Firebase 构建一个笔记应用">
+<meta name="twitter:description" content="前几天翻译了基于这篇博客的文章：用 Vuex 构建一个笔记应用。在此基础上我对它做了一些更新：
+
+把数据同步到 Firebase 上，不会每次关掉浏览器就丢失数据。
+加了笔记检索功能
+为保证代码整洁，加上了 eslint">
+<meta name="twitter:image" content="http://yoursite.com/resources/notes-app/1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/30/build-a-noteApp-with-Vue-js-Firebase/"/>
+
+  <title> 用 Vue.js 和 Firebase 构建一个笔记应用 | ChenYiQiao's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ChenYiQiao's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章列表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用 Vue.js 和 Firebase 构建一个笔记应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-30T12:20:56+08:00" content="2016-05-30">
+              2016-05-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前几天翻译了基于<a href="https://coligo.io/learn-vuex-by-building-notes-app/" target="_blank" rel="external">这篇博客</a>的文章：<a href="https://segmentfault.com/a/1190000005015164" target="_blank" rel="external">用 Vuex 构建一个笔记应用</a>。在此基础上我对它做了一些更新：</p>
+<ul>
+<li>把数据同步到 Firebase 上，不会每次关掉浏览器就丢失数据。</li>
+<li>加了笔记检索功能</li>
+<li>为保证代码整洁，加上了 eslint</li>
+</ul>
+<a id="more"></a>
+<p>你可以从 <a href="https://github.com/chenyiqiao/notes-app-vuejs-vuex" target="_blank" rel="external">Github Repo</a> 下载源码，和 Firebase 的同步效果看下面这个 gif:</p>
+<p><img src="/resources/notes-app/1.gif" alt="图片描述"></p>
+<h2 id="把数据同步到-Firebase"><a href="#把数据同步到-Firebase" class="headerlink" title="把数据同步到 Firebase"></a>把数据同步到 Firebase</h2><p>可能你也知道 Vue.js 和 Firebase 合作搞出了一个 <a href="https://github.com/vuejs/vuefire" target="_blank" rel="external">Vuefire</a>, 但是在这里并不能用它，因为用 Vuex 管理数据的结果就是组件内部只承担基本的View层的职责，而数据基本上都在 store 里面。所以我们只能把数据的存取放在 store 里面。</p>
+<h3 id="Firebase-概述"><a href="#Firebase-概述" class="headerlink" title="Firebase 概述"></a>Firebase 概述</h3><blockquote>
+<p>如果熟悉 Firebase 的使用，可以放心地跳过这一段。</p>
+</blockquote>
+<p>如果你还没有 <a href="https://www.firebase.com/" target="_blank" rel="external">Firebase</a> 的账号，可以去注册一个，注册号之后会自动生成一个”MY FIRST APP”,这个初始应用给的地址就是用来存数据的地方。</p>
+<p>Firebase 存的数据都是 JSON 对象。我们向 JSON 树里面加数据的时候，这条数据就变成了 JSON 树里的一个键。比方说，在<code>/user/mchen</code>下面加上<code>widgets</code>属性之后，数据就变成了这个样子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "users": &#123;</span><br><span class="line">    "mchen": &#123;</span><br><span class="line">      "friends": &#123; "brinchen": true &#125;,</span><br><span class="line">      "name": "Mary Chen",</span><br><span class="line">      "widgets": &#123; "one": true, "three": true &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "brinchen": &#123; ... &#125;,</span><br><span class="line">    "hmadi": &#123; ... &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="创建数据引用"><a href="#创建数据引用" class="headerlink" title="创建数据引用"></a>创建数据引用</h4><p>要读写数据库里的数据，首先要创建一个指向数据的引用，每个引用对应一条 URL。要获取其子元素，可以用<code>child</code> API, 也可以直接把子路径加到 URL 上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// referene</span></span><br><span class="line"><span class="keyword">new</span> Firebase(https:<span class="comment">//docs-examples.firebaseio.com/web/data)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子路径加到 URL 上</span></span><br><span class="line"><span class="keyword">new</span> Firebase(<span class="string">"https://docs-examples.firebaseio.com/web/data/users/mchen/name"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// child API</span></span><br><span class="line">rootRef.child(<span class="string">'users/mchen/name'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="Firebase-数据库中的数组"><a href="#Firebase-数据库中的数组" class="headerlink" title="Firebase 数据库中的数组"></a>Firebase 数据库中的数组</h4><p>Firebase 数据库不能原生支持数组。如果你存了一个数组，实际上是把它存储为一个用数组作为键的对象:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// we send this</span></span><br><span class="line">[<span class="string">'hello'</span>, <span class="string">'world'</span>]</span><br><span class="line"><span class="comment">// firebase database store this</span></span><br><span class="line">&#123;<span class="number">0</span>: <span class="string">'hello'</span>, <span class="number">1</span>: <span class="string">'world'</span>&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h4><h5 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h5><p><code>set()</code> 方法把新数据放到指定的引用的路径下，代替那个路径下原有的数据。它可以接收各种数据类型，如果参数是 null 的话就意味着删掉这个路径下的数据。</p>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新建一个博客的引用</span></span><br><span class="line"><span class="keyword">var</span> ref = <span class="keyword">new</span> Firebase(<span class="string">'https://docs-examples.firebaseio.com/web/saving-data/fireblog'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> usersRef = ref.child(<span class="string">'users'</span>)</span><br><span class="line"></span><br><span class="line">usersRef.set(&#123;</span><br><span class="line">  alanisawesome: &#123;</span><br><span class="line">  date_of_birth: <span class="string">"June 23, 1912"</span>,</span><br><span class="line">  full_name: <span class="string">"Alan Turing"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  gracehop: &#123;</span><br><span class="line">    date_of_birth: <span class="string">"December 9, 1906"</span>,</span><br><span class="line">    full_name: <span class="string">"Grace Hopper"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>当然，也可以直接在子路径下存储数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">usersRef.child(<span class="string">"alanisawesome"</span>).set(&#123;</span><br><span class="line">  date_of_birth: <span class="string">"June 23, 1912"</span>,</span><br><span class="line">  full_name: <span class="string">"Alan Turing"</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">usersRef.child(<span class="string">"gracehop"</span>).set(&#123;</span><br><span class="line">  date_of_birth: <span class="string">"December 9, 1906"</span>,</span><br><span class="line">  full_name: <span class="string">"Grace Hopper"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>不同之处在于，由于分成了两次操作，这种方式会触发两个事件。另外，如果<code>usersRef</code>下本来有数据的话，那么第一种方式就会覆盖掉之前的数据。</p>
+<h5 id="update"><a href="#update" class="headerlink" title="update()"></a>update()</h5><p>上面的<code>set()</code>对数据具有”破坏性”，如果我们并不想改动原来的数据的话，可能<code>update()</code>是更合适的选择：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hopperRef = userRef.child(<span class="string">'gracehop'</span>)</span><br><span class="line">hopperRef.update(&#123;</span><br><span class="line">  <span class="string">'nickname'</span>: <span class="string">'Amazing Grace'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这段代码会在 Grace 的资料下面加上 nickname 这一项，如果我们用的是<code>set()</code>的话，那么<code>full_name</code>和<code>date_of_birth</code>就会被删掉。</p>
+<p>另外，我们还可以在多个路径下同时做 update 操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">usersRef.update(&#123;</span><br><span class="line">  <span class="string">"alanisawesome/nickname"</span>: <span class="string">"Alan The Machine"</span>,</span><br><span class="line">  <span class="string">"gracehop/nickname"</span>: <span class="string">"Amazing Grace"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="push"><a href="#push" class="headerlink" title="push()"></a>push()</h5><p>前面已经提到了，由于数组索引不具有独特性，Firebase 不提供对数组的支持，我们因此不得不转而用对象来处理。</p>
+<p>在 Firebase 里面，<code>push</code>方法会为每一个子元素根据时间戳生成一个唯一的 ID，这样就能保证每个子元素的独特性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> postsRef = ref.child(<span class="string">'posts'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// push 进去的这个元素有了自己的路径</span></span><br><span class="line"><span class="keyword">var</span> newPostRef = postsRef.push()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 ID</span></span><br><span class="line"><span class="keyword">var</span> uniqueID = newPostRef.key()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为这个元素赋值</span></span><br><span class="line">newPostRef.set(&#123;</span><br><span class="line">  author: <span class="string">'gracehop'</span>,</span><br><span class="line">  title: <span class="string">'Announcing COBOL, a New Programming language'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以把这两个动作合并</span></span><br><span class="line">postsRef.push().set(&#123;</span><br><span class="line">  author: <span class="string">'alanisawesome'</span>,</span><br><span class="line">  title: <span class="string">'The Turing Machine'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最后生成的数据就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;posts&quot;: &#123;</span><br><span class="line">    &quot;-JRHTHaIs-jNPLXOQivY&quot;: &#123;</span><br><span class="line">      &quot;author&quot;: &quot;gracehop&quot;,</span><br><span class="line">      &quot;title&quot;: &quot;Announcing COBOL, a New Programming Language&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;-JRHTHaKuITFIhnj02kE&quot;: &#123;</span><br><span class="line">      &quot;author&quot;: &quot;alanisawesome&quot;,</span><br><span class="line">      &quot;title&quot;: &quot;The Turing Machine&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.firebase.com/blog/2015-02-11-firebase-unique-identifiers.html" target="_blank" rel="external">这篇博客</a>聊到了这个 ID 是怎么回事以及怎么生成的。</p>
+<h4 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h4><p>获取 Firebase 数据库里的数据是通过对数据引用添加一个异步的监听器来完成的。在数据初始化和每次数据变化的时候监听器就会触发。<code>value</code>事件用来读取在此时数据库内容的快照，在初始时触发一次，然后每次变化的时候也会触发：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Get a database reference to our posts</span></span><br><span class="line"><span class="keyword">var</span> ref = <span class="keyword">new</span> Firebase(<span class="string">"https://docs-examples.firebaseio.com/web/saving-data/fireblog/posts"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Attach an asynchronous callback to read the data at our posts reference</span></span><br><span class="line">ref.on(<span class="string">"value"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">snapshot</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(snapshot.val());</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">errorObject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"The read failed: "</span> + errorObject.code);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>简单起见，我们只用了 value 事件，其他的事件就不介绍了。</p>
+<h3 id="Firebase-的数据处理方式对代码的影响"><a href="#Firebase-的数据处理方式对代码的影响" class="headerlink" title="Firebase 的数据处理方式对代码的影响"></a>Firebase 的数据处理方式对代码的影响</h3><p>开始写代码之前，我想搞清楚两个问题：</p>
+<ul>
+<li>Firebase 是怎么管理数据的，它对组件的 View 有什么影响</li>
+<li>用户交互过程中是怎么和 Firebase 同步数据的</li>
+</ul>
+<p>先看第一个问题，这是我在 Firebase 上保存的 JSON 数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"notes"</span> : &#123;</span><br><span class="line">    <span class="string">"-KGXQN4JVdopZO9SWDBw"</span> : &#123;</span><br><span class="line">      <span class="string">"favorite"</span> : <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"text"</span> : <span class="string">"change"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"-KGXQN6oWiXcBe0a54cT"</span> : &#123;</span><br><span class="line">      <span class="string">"favorite"</span> : <span class="literal">false</span>,</span><br><span class="line">      <span class="string">"text"</span> : <span class="string">"a"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"-KGZgZBoJJQ-hl1i78aa"</span> : &#123;</span><br><span class="line">      <span class="string">"favorite"</span> : <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"text"</span> : <span class="string">"little"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"-KGZhcfS2RD4W1eKuhAY"</span> : &#123;</span><br><span class="line">      <span class="string">"favorite"</span> : <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"text"</span> : <span class="string">"bit"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个乱码一样的东西是 Firebase 为了保证数据的独特性而加上的。我们发现一个问题，在此之前 notes 实际上是一个包含对象的数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    favorite: <span class="literal">true</span>,</span><br><span class="line">    text: <span class="string">'change'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    favorite: <span class="literal">false</span>,</span><br><span class="line">    text: <span class="string">'a'</span></span><br><span class="line">  &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    favorite: <span class="literal">true</span>,</span><br><span class="line">    text: <span class="string">'little'</span></span><br><span class="line">  &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    favorite: <span class="literal">true</span>,</span><br><span class="line">    text: <span class="string">'bit'</span></span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>显然，对数据的处理方式的变化使得渲染 notes 列表的组件，也就是 NotesList.vue 需要大幅修改。修改的逻辑简单来说就是在思路上要完成从数组到对象的转换。</p>
+<p>举个例子，之前 filteredNotes 是这么写的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">filteredNotes () &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.show === <span class="string">'all'</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.notes</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.show === <span class="string">'favorites'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.notes.filter(note =&gt; note.favorite)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在的问题就是，notes 不再是一个数组，而是一个对象，而对象是没有 filter 方法的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">filteredNotes () &#123;</span><br><span class="line">  <span class="keyword">var</span> favoriteNotes = &#123;&#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.show === <span class="string">'all'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.notes</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.show === <span class="string">'favorites'</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> note <span class="keyword">in</span> <span class="keyword">this</span>.notes) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.notes[note][<span class="string">'favorite'</span>]) &#123;</span><br><span class="line">        favoriteNotes[note] = <span class="keyword">this</span>.notes[note]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> favoriteNotes</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外由于每个对象都对应一个自己的 ID，所以我也在 state 里面加了一个<code>activeKey</code>用来表示当前笔记的 ID，实际上现在我们在<code>TOGGLE_FAVORITE</code>,<code>SET_ACTIVE</code>这些方法里面都需要对相应的<code>activeKey</code>赋值。</p>
+<p>再看第二个问题，要怎么和 Firebase 交互：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">let</span> notesRef = <span class="keyword">new</span> Firebase(<span class="string">'https://crackling-inferno-296.firebaseio.com/notes'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  notes: &#123;&#125;,</span><br><span class="line">  activeNote: &#123;&#125;,</span><br><span class="line">  activeKey: <span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化数据，并且此后数据的变化都会反映到 View</span></span><br><span class="line">notesRef.on(<span class="string">'value'</span>, snapshot =&gt; &#123;</span><br><span class="line">  state.notes = snapshot.val()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每一个操作都需要同步到 Firebase</span></span><br><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line"></span><br><span class="line">  ADD_NOTE (state) &#123;</span><br><span class="line">    <span class="keyword">const</span> newNote = &#123;</span><br><span class="line">      text: <span class="string">'New note'</span>,</span><br><span class="line">      favorite: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> addRef = notesRef.push()</span><br><span class="line">    state.activeKey = addRef.key()</span><br><span class="line">    addRef.set(newNote)</span><br><span class="line">    state.activeNote = newNote</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  EDIT_NOTE (state, text) &#123;</span><br><span class="line">    notesRef.child(state.activeKey).update(&#123;</span><br><span class="line">      <span class="string">'text'</span>: text</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  DELETE_NOTE (state) &#123;</span><br><span class="line">    notesRef.child(state.activeKey).set(<span class="literal">null</span>)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  TOGGLE_FAVORITE (state) &#123;</span><br><span class="line">    state.activeNote.favorite = !state.activeNote.favorite</span><br><span class="line">    notesRef.child(state.activeKey).update(&#123;</span><br><span class="line">      <span class="string">'favorite'</span>: state.activeNote.favorite</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  SET_ACTIVE_NOTE (state, key, note) &#123;</span><br><span class="line">    state.activeNote = note</span><br><span class="line">    state.activeKey = key</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="笔记检索功能"><a href="#笔记检索功能" class="headerlink" title="笔记检索功能"></a>笔记检索功能</h2><p>效果图：</p>
+<p><img src="/resources/notes-app/2.gif" alt="图片描述"></p>
+<p>这个功能比较常见，思路就是列表渲染 + 过滤器：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// NoteList.vue</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- filter --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"query"</span> <span class="attr">placeholder</span>=<span class="string">"Filter your notes..."</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- render notes in a list --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"list-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">v-for</span>=<span class="string">"note in filteredNotes | byTitle query"</span></span><br><span class="line">      <span class="attr">class</span>=<span class="string">"list-group-item"</span> <span class="attr">href</span>=<span class="string">"#"</span></span><br><span class="line">      <span class="attr">:class</span>=<span class="string">"&#123;active: activeKey === $key&#125;"</span></span><br><span class="line">      @<span class="attr">click</span>=<span class="string">"updateActiveNote($key, note)"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"list-group-item-heading"</span>&gt;</span></span><br><span class="line">        &#123;&#123;note.text.substring(0, 30)&#125;&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NoteList.vue</span></span><br><span class="line"></span><br><span class="line">filters: &#123;</span><br><span class="line">  byTitle (notesToFilter, filterValue) &#123;</span><br><span class="line">    <span class="keyword">var</span> filteredNotes = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> note <span class="keyword">in</span> notesToFilter) &#123;</span><br><span class="line">      <span class="keyword">if</span> (notesToFilter[note][<span class="string">'text'</span>].indexOf(filterValue) &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        filteredNotes[note] = notesToFilter[note]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> filteredNotes</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="在项目中用-eslint"><a href="#在项目中用-eslint" class="headerlink" title="在项目中用 eslint"></a>在项目中用 eslint</h2><p>如果你是个 Vue 重度用户，你应该已经用上 eslint-standard 了吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;eslint&quot;: &quot;^2.0.0&quot;,</span><br><span class="line">&quot;eslint-config-standard&quot;: &quot;^5.1.0&quot;,</span><br><span class="line">&quot;eslint-friendly-formatter&quot;: &quot;^1.2.2&quot;,</span><br><span class="line">&quot;eslint-loader&quot;: &quot;^1.3.0&quot;,</span><br><span class="line">&quot;eslint-plugin-html&quot;: &quot;^1.3.0&quot;,</span><br><span class="line">&quot;eslint-plugin-promise&quot;: &quot;^1.0.8&quot;,</span><br><span class="line">&quot;eslint-plugin-standard&quot;: &quot;^1.3.2&quot;</span><br></pre></td></tr></table></figure>
+<p>把以上各条添加到 devDependencies 里面。如果用了 vue-cli 的话, 那就不需要手动配置 eslint 了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  preLoaders: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.vue$/</span>,</span><br><span class="line">      loader: <span class="string">'eslint'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">      loader: <span class="string">'eslint'</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  loaders: [ ... ],</span><br><span class="line">  eslint: &#123;</span><br><span class="line">    formatter: <span class="built_in">require</span>(<span class="string">'eslint-friendly-formatter'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要自定义规则的话，就在根目录下新建<code>.eslintrc</code>，这是我的配置:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  root: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style</span></span><br><span class="line">  extends: <span class="string">'standard'</span>,</span><br><span class="line">  <span class="comment">// required to lint *.vue files</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="string">'html'</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// add your custom rules here</span></span><br><span class="line">  <span class="string">'rules'</span>: &#123;</span><br><span class="line">    <span class="comment">// allow paren-less arrow functions</span></span><br><span class="line">    <span class="string">'arrow-parens'</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">'no-undef'</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">'one-var'</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="comment">// allow debugger during development</span></span><br><span class="line">    <span class="string">'no-debugger'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="number">2</span> : <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag">#Vue.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/30/know-the-reference/" rel="prev" title="理解引用">
+                理解引用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenyiqiao" />
+          <p class="site-author-name" itemprop="name">chenyiqiao</p>
+          <p class="site-description motion-element" itemprop="description">Less is more</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenyiqiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/chenyiqiao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#把数据同步到-Firebase"><span class="nav-number">1.</span> <span class="nav-text">把数据同步到 Firebase</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Firebase-概述"><span class="nav-number">1.1.</span> <span class="nav-text">Firebase 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据引用"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建数据引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Firebase-数据库中的数组"><span class="nav-number">1.1.2.</span> <span class="nav-text">Firebase 数据库中的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储数据"><span class="nav-number">1.1.3.</span> <span class="nav-text">存储数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#set"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#update"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">update()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#push"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">push()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取数据"><span class="nav-number">1.1.4.</span> <span class="nav-text">获取数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firebase-的数据处理方式对代码的影响"><span class="nav-number">1.2.</span> <span class="nav-text">Firebase 的数据处理方式对代码的影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#笔记检索功能"><span class="nav-number">2.</span> <span class="nav-text">笔记检索功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在项目中用-eslint"><span class="nav-number">3.</span> <span class="nav-text">在项目中用 eslint</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenyiqiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
