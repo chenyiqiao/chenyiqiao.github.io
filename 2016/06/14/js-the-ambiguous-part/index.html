@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="ECMAScript," />
 
 
 
@@ -86,15 +86,28 @@
 
 
 
-<meta name="description" content="Less is more">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ChenYiQiao's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
+1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
+简单来说，JS 代码里面访问相应元素的 property 是这样的：
+1var id = document.getElementByTagName(&apos;div&apos;).id
+而访问 attribute 的方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript The Ambiguous Part">
+<meta property="og:url" content="http://yoursite.com/2016/06/14/js-the-ambiguous-part/index.html">
 <meta property="og:site_name" content="ChenYiQiao's Blog">
-<meta property="og:description" content="Less is more">
+<meta property="og:description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
+1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
+简单来说，JS 代码里面访问相应元素的 property 是这样的：
+1var id = document.getElementByTagName(&apos;div&apos;).id
+而访问 attribute 的方式">
+<meta property="og:updated_time" content="2016-06-14T06:32:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ChenYiQiao's Blog">
-<meta name="twitter:description" content="Less is more">
+<meta name="twitter:title" content="JavaScript The Ambiguous Part">
+<meta name="twitter:description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
+1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
+简单来说，JS 代码里面访问相应元素的 property 是这样的：
+1var id = document.getElementByTagName(&apos;div&apos;).id
+而访问 attribute 的方式">
 
 
 
@@ -115,9 +128,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/06/14/js-the-ambiguous-part/"/>
 
-  <title> ChenYiQiao's Blog </title>
+  <title> JavaScript The Ambiguous Part | ChenYiQiao's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,9 +151,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,9 +238,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -249,10 +260,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/06/14/js-the-ambiguous-part/" itemprop="url">
-                  JavaScript The Ambiguous Part
-                </a>
+                JavaScript The Ambiguous Part
               
             
           </h1>
@@ -292,9 +300,7 @@
       
 
       
-        
-          
-            <h1 id="HTML中的-attribute-和-property"><a href="#HTML中的-attribute-和-property" class="headerlink" title="HTML中的 attribute 和 property"></a>HTML中的 attribute 和 property</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>attribute 和 property 是经常被混淆的两个概念。</p>
+        <h1 id="HTML中的-attribute-和-property"><a href="#HTML中的-attribute-和-property" class="headerlink" title="HTML中的 attribute 和 property"></a>HTML中的 attribute 和 property</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>attribute 和 property 是经常被混淆的两个概念。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"my-el"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>简单来说，JS 代码里面访问相应元素的 property 是这样的：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="built_in">document</span>.getElementByTagName(<span class="string">'div'</span>).id</span><br></pre></td></tr></table></figure>
@@ -314,522 +320,58 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myElementProto = Obejct.create(HTMLElment.prototype, &#123;</span><br><span class="line">  createdCallback: &#123;</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 property</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(myElementProto, <span class="string">'prop1'</span>, &#123;</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="comment">//</span></span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'property change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 attribute</span></span><br><span class="line">myElementProto.attributeChangedCallback = fucntion (attr, oldVal, newVal) &#123;</span><br><span class="line">  <span class="keyword">if</span> (attr === <span class="string">'attr1'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'attribute change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.myElement = <span class="built_in">document</span>.registerElement(<span class="string">'my-element'</span>, &#123;</span><br><span class="line">  prototype: myElementProto</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>来源：<a href="https://github.com/wintercn/blog/issues/7" target="_blank" rel="external">winter 的 issue blog</a></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/03/npm-dep-resolution/" itemprop="url">
-                  NPM 依赖解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-03T12:39:57+08:00" content="2016-06-03">
-              2016-06-03
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/ECMAScript/" rel="tag">#ECMAScript</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>npm v2 | v3 依赖解析的区别，以及对 node_modules 文件夹带来的影响。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/03/npm-dep-resolution/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/03/npm-dep-resolution/" rel="next" title="NPM 依赖解析">
+                <i class="fa fa-chevron-left"></i> NPM 依赖解析
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/03/tools-md/" itemprop="url">
-                  锤子工作流
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-03T12:39:57+08:00" content="2016-06-03">
-              2016-06-03
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>Sublime text | iTerm | Chrome | Git | More…</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/03/tools-md/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/02/gitbook-doc/" itemprop="url">
-                  Gitbook 使用手册
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-02T15:51:39+08:00" content="2016-06-02">
-              2016-06-02
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这篇文章基本上是 <a href="http://toolchain.gitbook.com/">Gitbook Toolchain Doc</a> 的翻译，后面还补上了关于怎么托管到 Github repo 上的内容。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/02/gitbook-doc/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/30/know-the-reference/" itemprop="url">
-                  理解引用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T19:36:11+08:00" content="2016-05-30">
-              2016-05-30
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>(原文：<a href="http://perfectionkills.com/know-thy-reference/">know thy reference</a> - <em>kangax</em>)</p>
-<p>不久前的某一个星期天清晨，我躺床上看 HackerNews，有一篇叫「This in JavaScript」的文章，我稍微扫了两眼。不出意外，就是函数调用、方法调用、显式绑定、构造函数实例化这档子事。这篇文章特别长，我越看就越觉得，这一大堆的解释和例子会给一个不了解 this 机制的人带来多大的心理阴影啊。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/30/know-the-reference/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/30/build-a-noteApp-with-Vue-js-Firebase/" itemprop="url">
-                  用 Vue.js 和 Firebase 构建一个笔记应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T12:20:56+08:00" content="2016-05-30">
-              2016-05-30
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前几天翻译了基于<a href="https://coligo.io/learn-vuex-by-building-notes-app/">这篇博客</a>的文章：<a href="https://segmentfault.com/a/1190000005015164">用 Vuex 构建一个笔记应用</a>。在此基础上我对它做了一些更新：</p>
-<ul>
-<li>把数据同步到 Firebase 上，不会每次关掉浏览器就丢失数据。</li>
-<li>加了笔记检索功能</li>
-<li>为保证代码整洁，加上了 eslint</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/30/build-a-noteApp-with-Vue-js-Firebase/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -837,6 +379,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -856,8 +402,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -927,6 +482,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML中的-attribute-和-property"><span class="nav-number">1.</span> <span class="nav-text">HTML中的 attribute 和 property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名字不一致"><span class="nav-number">1.2.1.</span> <span class="nav-text">名字不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型不一致"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义不一致"><span class="nav-number">1.2.3.</span> <span class="nav-text">语义不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持单向关系"><span class="nav-number">1.2.4.</span> <span class="nav-text">保持单向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊场景"><span class="nav-number">1.3.</span> <span class="nav-text">特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mutation"><span class="nav-number">1.3.1.</span> <span class="nav-text">mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-element"><span class="nav-number">1.3.2.</span> <span class="nav-text">custom element</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1023,6 +589,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
