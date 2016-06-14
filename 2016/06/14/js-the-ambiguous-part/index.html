@@ -86,28 +86,16 @@
 
 
 
-<meta name="description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
-1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
-简单来说，JS 代码里面访问相应元素的 property 是这样的：
-1var id = document.getElementByTagName(&apos;div&apos;).id
-而访问 attribute 的方式">
+<meta name="description" content="前端那些能烦死人的东西">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript The Ambiguous Part">
+<meta property="og:title" content="Front End The Ambiguous Part">
 <meta property="og:url" content="http://yoursite.com/2016/06/14/js-the-ambiguous-part/index.html">
 <meta property="og:site_name" content="ChenYiQiao's Blog">
-<meta property="og:description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
-1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
-简单来说，JS 代码里面访问相应元素的 property 是这样的：
-1var id = document.getElementByTagName(&apos;div&apos;).id
-而访问 attribute 的方式">
-<meta property="og:updated_time" content="2016-06-14T06:32:30.000Z">
+<meta property="og:description" content="前端那些能烦死人的东西">
+<meta property="og:updated_time" content="2016-06-14T06:52:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript The Ambiguous Part">
-<meta name="twitter:description" content="HTML中的 attribute 和 property概述attribute 和 property 是经常被混淆的两个概念。
-1&amp;lt;div id=&quot;my-el&quot;&amp;gt;&amp;lt;/div&amp;gt;
-简单来说，JS 代码里面访问相应元素的 property 是这样的：
-1var id = document.getElementByTagName(&apos;div&apos;).id
-而访问 attribute 的方式">
+<meta name="twitter:title" content="Front End The Ambiguous Part">
+<meta name="twitter:description" content="前端那些能烦死人的东西">
 
 
 
@@ -130,7 +118,7 @@
 
   <link rel="canonical" href="http://yoursite.com/2016/06/14/js-the-ambiguous-part/"/>
 
-  <title> JavaScript The Ambiguous Part | ChenYiQiao's Blog </title>
+  <title> Front End The Ambiguous Part | ChenYiQiao's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +248,7 @@
             
             
               
-                JavaScript The Ambiguous Part
+                Front End The Ambiguous Part
               
             
           </h1>
@@ -300,7 +288,8 @@
       
 
       
-        <h1 id="HTML中的-attribute-和-property"><a href="#HTML中的-attribute-和-property" class="headerlink" title="HTML中的 attribute 和 property"></a>HTML中的 attribute 和 property</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>attribute 和 property 是经常被混淆的两个概念。</p>
+        <p>前端那些能烦死人的东西<br><a id="more"></a></p>
+<h1 id="HTML中的-attribute-和-property"><a href="#HTML中的-attribute-和-property" class="headerlink" title="HTML中的 attribute 和 property"></a>HTML中的 attribute 和 property</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>attribute 和 property 是经常被混淆的两个概念。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"my-el"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>简单来说，JS 代码里面访问相应元素的 property 是这样的：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="built_in">document</span>.getElementByTagName(<span class="string">'div'</span>).id</span><br></pre></td></tr></table></figure>
@@ -319,6 +308,17 @@
 <h3 id="custom-element"><a href="#custom-element" class="headerlink" title="custom element"></a>custom element</h3><p>在使用 Web Component 的时候，可以定义 attribute 和 property，两者可以互相反射，也可以全无关联。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myElementProto = Obejct.create(HTMLElment.prototype, &#123;</span><br><span class="line">  createdCallback: &#123;</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 property</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(myElementProto, <span class="string">'prop1'</span>, &#123;</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="comment">//</span></span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'property change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 attribute</span></span><br><span class="line">myElementProto.attributeChangedCallback = fucntion (attr, oldVal, newVal) &#123;</span><br><span class="line">  <span class="keyword">if</span> (attr === <span class="string">'attr1'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'attribute change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.myElement = <span class="built_in">document</span>.registerElement(<span class="string">'my-element'</span>, &#123;</span><br><span class="line">  prototype: myElementProto</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>来源：<a href="https://github.com/wintercn/blog/issues/7" target="_blank" rel="external">winter 的 issue blog</a></p>
+<h2 id="URI-编码"><a href="#URI-编码" class="headerlink" title="URI 编码"></a>URI 编码</h2><p>URI 编码针对的是两个对象：</p>
+<ul>
+<li>没有功能的功能字符</li>
+<li>可打印的 ASCII 码之外的所有字符，比如中文等等。</li>
+</ul>
+<h3 id="encodeURI"><a href="#encodeURI" class="headerlink" title="encodeURI"></a>encodeURI</h3><p>参数是一个 URI, 以下是它<strong>不</strong>转义的字符：<br>type | Includes<br>——- | —————-:<br>Reserved Characters | ; , / ? : @ &amp; = + $<br>Unescaped characters | alphabetic, decimal digits, - _ . ! ~ * ‘ ( )<br>Number sign  | #</p>
+<p>从中也看得出它的缺陷，比如说在路径或者 querystring 里面出现了功能字符的话，它不会转义，这是有问题的。</p>
+<h3 id="encodeURIComponent"><a href="#encodeURIComponent" class="headerlink" title="encodeURIComponent"></a>encodeURIComponent</h3><p>参数是字符串，从名字看得出来，它转义的对象是 URI 的一部分而非整体。它转义的内容是除了 Unescaped characters 以外的所有字符。</p>
+<p>可以写一段代码看看 encodeURI 和 encodeURIComponent 转义的字符有哪些出入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> char = <span class="built_in">String</span>.fromCharCode(i)</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">encodeURI</span>(char) !== <span class="built_in">encodeURIComponent</span>(char)) &#123;</span><br><span class="line">    arr.push(&#123;</span><br><span class="line">      char: char,</span><br><span class="line">      <span class="built_in">encodeURI</span>: <span class="built_in">encodeURI</span>(char),</span><br><span class="line">      <span class="built_in">encodeURIComponent</span>: <span class="built_in">encodeURIComponent</span>(char)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.table(arr)</span><br></pre></td></tr></table></figure>
+<p>所以说用 encodeURIComponent 是一个更稳的办法，一般来说 scheme, host, port 这几个部分都不会需要转义，要转义的往往是 path 和 query, 用 encodeURIComponent 的方法就是把键值对分别转义，拼接起来。这样的话，那些没有功能的功能字符也被转义了。</p>
 
       
     </div>
@@ -489,7 +489,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML中的-attribute-和-property"><span class="nav-number">1.</span> <span class="nav-text">HTML中的 attribute 和 property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名字不一致"><span class="nav-number">1.2.1.</span> <span class="nav-text">名字不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型不一致"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义不一致"><span class="nav-number">1.2.3.</span> <span class="nav-text">语义不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持单向关系"><span class="nav-number">1.2.4.</span> <span class="nav-text">保持单向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊场景"><span class="nav-number">1.3.</span> <span class="nav-text">特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mutation"><span class="nav-number">1.3.1.</span> <span class="nav-text">mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-element"><span class="nav-number">1.3.2.</span> <span class="nav-text">custom element</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML中的-attribute-和-property"><span class="nav-number">1.</span> <span class="nav-text">HTML中的 attribute 和 property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名字不一致"><span class="nav-number">1.2.1.</span> <span class="nav-text">名字不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型不一致"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义不一致"><span class="nav-number">1.2.3.</span> <span class="nav-text">语义不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持单向关系"><span class="nav-number">1.2.4.</span> <span class="nav-text">保持单向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊场景"><span class="nav-number">1.3.</span> <span class="nav-text">特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mutation"><span class="nav-number">1.3.1.</span> <span class="nav-text">mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-element"><span class="nav-number">1.3.2.</span> <span class="nav-text">custom element</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URI-编码"><span class="nav-number">1.4.</span> <span class="nav-text">URI 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURI"><span class="nav-number">1.4.1.</span> <span class="nav-text">encodeURI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURIComponent"><span class="nav-number">1.4.2.</span> <span class="nav-text">encodeURIComponent</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
