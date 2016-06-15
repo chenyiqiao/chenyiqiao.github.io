@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ECMAScript," />
+  <meta name="keywords" content="坑," />
 
 
 
@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/14/js-the-ambiguous-part/index.html">
 <meta property="og:site_name" content="ChenYiQiao's Blog">
 <meta property="og:description" content="前端那些能烦死人的东西">
-<meta property="og:updated_time" content="2016-06-14T06:52:43.000Z">
+<meta property="og:updated_time" content="2016-06-15T13:03:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Front End The Ambiguous Part">
 <meta name="twitter:description" content="前端那些能烦死人的东西">
@@ -308,17 +308,192 @@
 <h3 id="custom-element"><a href="#custom-element" class="headerlink" title="custom element"></a>custom element</h3><p>在使用 Web Component 的时候，可以定义 attribute 和 property，两者可以互相反射，也可以全无关联。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myElementProto = Obejct.create(HTMLElment.prototype, &#123;</span><br><span class="line">  createdCallback: &#123;</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 property</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(myElementProto, <span class="string">'prop1'</span>, &#123;</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="comment">//</span></span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'property change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 attribute</span></span><br><span class="line">myElementProto.attributeChangedCallback = fucntion (attr, oldVal, newVal) &#123;</span><br><span class="line">  <span class="keyword">if</span> (attr === <span class="string">'attr1'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'attribute change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.myElement = <span class="built_in">document</span>.registerElement(<span class="string">'my-element'</span>, &#123;</span><br><span class="line">  prototype: myElementProto</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>来源：<a href="https://github.com/wintercn/blog/issues/7" target="_blank" rel="external">winter 的 issue blog</a></p>
-<h2 id="URI-编码"><a href="#URI-编码" class="headerlink" title="URI 编码"></a>URI 编码</h2><p>URI 编码针对的是两个对象：</p>
+<h1 id="URI-编码"><a href="#URI-编码" class="headerlink" title="URI 编码"></a>URI 编码</h1><p>URI 编码针对的是两个对象：</p>
 <ul>
 <li>没有功能的功能字符</li>
 <li>可打印的 ASCII 码之外的所有字符，比如中文等等。</li>
 </ul>
-<h3 id="encodeURI"><a href="#encodeURI" class="headerlink" title="encodeURI"></a>encodeURI</h3><p>参数是一个 URI, 以下是它<strong>不</strong>转义的字符：<br>type | Includes<br>——- | —————-:<br>Reserved Characters | ; , / ? : @ &amp; = + $<br>Unescaped characters | alphabetic, decimal digits, - _ . ! ~ * ‘ ( )<br>Number sign  | #</p>
+<h2 id="encodeURI"><a href="#encodeURI" class="headerlink" title="encodeURI"></a>encodeURI</h2><p>参数是一个 URI, 以下是它<strong>不</strong>转义的字符：</p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th style="text-align:center">Includes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reserved Characters</td>
+<td style="text-align:center">; , / ? : @ &amp; = + $</td>
+</tr>
+<tr>
+<td>Unescaped characters</td>
+<td style="text-align:center">alphabetic, decimal digits, - _ . ! ~ * ‘ ( )</td>
+</tr>
+<tr>
+<td>Number sign</td>
+<td style="text-align:center">#</td>
+</tr>
+</tbody>
+</table>
 <p>从中也看得出它的缺陷，比如说在路径或者 querystring 里面出现了功能字符的话，它不会转义，这是有问题的。</p>
-<h3 id="encodeURIComponent"><a href="#encodeURIComponent" class="headerlink" title="encodeURIComponent"></a>encodeURIComponent</h3><p>参数是字符串，从名字看得出来，它转义的对象是 URI 的一部分而非整体。它转义的内容是除了 Unescaped characters 以外的所有字符。</p>
+<h2 id="encodeURIComponent"><a href="#encodeURIComponent" class="headerlink" title="encodeURIComponent"></a>encodeURIComponent</h2><p>参数是字符串，从名字看得出来，它转义的对象是 URI 的一部分而非整体。它转义的内容是除了 Unescaped characters 以外的所有字符。</p>
 <p>可以写一段代码看看 encodeURI 和 encodeURIComponent 转义的字符有哪些出入：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> char = <span class="built_in">String</span>.fromCharCode(i)</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">encodeURI</span>(char) !== <span class="built_in">encodeURIComponent</span>(char)) &#123;</span><br><span class="line">    arr.push(&#123;</span><br><span class="line">      char: char,</span><br><span class="line">      <span class="built_in">encodeURI</span>: <span class="built_in">encodeURI</span>(char),</span><br><span class="line">      <span class="built_in">encodeURIComponent</span>: <span class="built_in">encodeURIComponent</span>(char)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.table(arr)</span><br></pre></td></tr></table></figure>
 <p>所以说用 encodeURIComponent 是一个更稳的办法，一般来说 scheme, host, port 这几个部分都不会需要转义，要转义的往往是 path 和 query, 用 encodeURIComponent 的方法就是把键值对分别转义，拼接起来。这样的话，那些没有功能的功能字符也被转义了。</p>
+<h1 id="Date-对象"><a href="#Date-对象" class="headerlink" title="Date 对象"></a>Date 对象</h1><p>要创建一个日期对象，使用 new 操作符和 Date 构造函数即可，参数接收自1970年1月1日午夜至今的毫秒数，但是一个正常人是不会知道这个数字的。所以在此之前需要把一个表示时间的字符串交给<code>Date.parse</code>处理。这个表示时间的字符串有这么几种常见的表示方式：</p>
+<ul>
+<li>“月/日/年”，如6/13/2004</li>
+<li>“英文月名 日，年”， 如 January 12, 2004</li>
+<li>YYYY-MM-DDTHH:mm:ss, 如 2004-05-25T00:00:00</li>
+<li>还有一种类似 Tue May 25 2004 00:00:00 GMT-0700 的东西，这玩意没人能记得住</li>
+</ul>
+<p><code>Date.UTC()</code>也是一个返回毫秒数的函数，但是和<code>Date.parse()</code>接收的参数不一样。它接收的参数是：年份，基于0的月份(0-11)，月中的哪一天(1-31)，小时数(0-23)，分钟，秒和毫秒数。其中只有年和月是必需的。如果没有月中的天数，则默认为1；如果省略剩下的参数，则统统为0。</p>
+<p>所以常规就这几种。当然了，在调用<code>new Date()</code>的时候就会自动调用<code>Date.parse()</code>或者<code>Date.UTC()</code>，不需要手动去做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'11/25/2014'</span>);</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'January 12, 2004'</span>);</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'2004-05-25T00:00:00'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2000年1月1日午夜零时</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2000</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2005年5月5日下午5：55：55</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2005</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">17</span>, <span class="number">55</span>, <span class="number">55</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="比较日期"><a href="#比较日期" class="headerlink" title="比较日期"></a>比较日期</h2><p>Date 构造函数的原型重写了<code>toString()</code>方法，各个浏览器下的显示各不同，没法用。但是<code>valueOf</code>会统一返回毫秒数，所以可以用来比较时间的早晚。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2007</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2007</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b &gt; a) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h1 id="稀疏数组和密集数组"><a href="#稀疏数组和密集数组" class="headerlink" title="稀疏数组和密集数组"></a>稀疏数组和密集数组</h1><p>紫云飞翻译的这篇的文章 <a href="http://www.cnblogs.com/ziyunfei/archive/2012/09/16/2687165.html" target="_blank" rel="external">JavaScript 中的稀疏数组和密集数组</a>详细地聊了 JS 里面有空位的数组(稀疏数组)的事儿。简单说就是在很多场景下稀疏数组的空位会被跳过，导致一些意想不到的问题。</p>
+<p><a href="https://www.zhihu.com/question/41493194" target="_blank" rel="external">如何不使用loop循环，创建一个长度为100的数组，并且每个元素的值等于它的下标</a>，这个问题就问了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">100</span>);</span><br><span class="line">a = a.map(<span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> index;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>为什么得到的结果是个空数组？原因就在于 map 函数会跳过稀疏数组的空位。那解决这个问题的办法就是把它花式改造成一个密集数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fill 填充</span></span><br><span class="line"><span class="built_in">Array</span>(<span class="number">100</span>).fill(<span class="string">'naive'</span>).map(<span class="function"><span class="keyword">function</span> (<span class="params">v, i</span>) </span>&#123; <span class="keyword">return</span> i; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Array.from 会把数组改造成密集的</span></span><br><span class="line"><span class="built_in">Array</span>.from(&#123;length: <span class="number">100</span>&#125;, (item, idx) =&gt; &#123;<span class="keyword">return</span> idx&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="数组空位元素的处理"><a href="#数组空位元素的处理" class="headerlink" title="数组空位元素的处理"></a>数组空位元素的处理</h2><p>简单来说，规律就是 ES6 以前的基本上都跳过空位，而 ES6 的方法基本上都会把空位转成 undefined。ES6 的做法才是妥当的。</p>
+<ul>
+<li><code>forEach()</code>，<code>filter()</code>，<code>every()</code>，<code>map()</code>和<code>some()</code>都会跳过空位。</li>
+<li><code>join()</code>和<code>toString()</code>会将空位视为<code>undefined</code>，而<code>undefined</code>和<code>null</code>会被处理成空字符串</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// forEach方法</span></span><br><span class="line">[,<span class="string">'a'</span>].forEach((x,i) =&gt; log(i)); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// filter方法</span></span><br><span class="line">[<span class="string">'a'</span>,,<span class="string">'b'</span>].filter(x =&gt; <span class="literal">true</span>) <span class="comment">// ['a','b']</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// every方法</span></span><br><span class="line">[,<span class="string">'a'</span>].every(x =&gt; x===<span class="string">'a'</span>) <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// some方法</span></span><br><span class="line">[,<span class="string">'a'</span>].some(x =&gt; x !== <span class="string">'a'</span>) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// map方法</span></span><br><span class="line">[,<span class="string">'a'</span>].map(x =&gt; <span class="number">1</span>) <span class="comment">// [,1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// join方法</span></span><br><span class="line">[,<span class="string">'a'</span>,<span class="literal">undefined</span>,<span class="literal">null</span>].join(<span class="string">'#'</span>) <span class="comment">// "#a##"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// toString方法</span></span><br><span class="line">[,<span class="string">'a'</span>,<span class="literal">undefined</span>,<span class="literal">null</span>].toString() <span class="comment">// ",a,,"</span></span><br></pre></td></tr></table></figure>
+<p>ES6 的<code>Array.from</code>方法会将数组的空位转为<code>undefined</code>，也就是说，这个方法不会忽略空位:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from([<span class="string">'a'</span>,,<span class="string">'b'</span>])</span><br><span class="line"><span class="comment">// [ "a", undefined, "b" ]</span></span><br></pre></td></tr></table></figure>
+<p>扩展运算符（…）也会将空位转为<code>undefined</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...[<span class="string">'a'</span>,,<span class="string">'b'</span>]]</span><br><span class="line"><span class="comment">// [ "a", undefined, "b" ]</span></span><br></pre></td></tr></table></figure>
+<p><code>for...of</code>循环也会遍历空位:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [, ,];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p><code>entries()</code>、<code>keys()</code>、<code>values()</code>、<code>find()</code>和<code>findIndex()</code>会将空位处理成<code>undefined</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entries()</span></span><br><span class="line">[...[,<span class="string">'a'</span>].entries()] <span class="comment">// [[0,undefined], [1,"a"]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// keys()</span></span><br><span class="line">[...[,<span class="string">'a'</span>].keys()] <span class="comment">// [0,1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// values()</span></span><br><span class="line">[...[,<span class="string">'a'</span>].values()] <span class="comment">// [undefined,"a"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// find()</span></span><br><span class="line">[,<span class="string">'a'</span>].find(x =&gt; <span class="literal">true</span>) <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// findIndex()</span></span><br><span class="line">[,<span class="string">'a'</span>].findIndex(x =&gt; <span class="literal">true</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>参考：<a href="http://es6.ruanyifeng.com/#docs/array#数组的空位" target="_blank" rel="external">阮一峰ES2015</a></p>
+<h1 id="JavaScript-的等号运算符"><a href="#JavaScript-的等号运算符" class="headerlink" title="JavaScript 的等号运算符"></a>JavaScript 的等号运算符</h1><p>JavaScript 判断相等的运算符分成相等运算符(==)和全等运算符(===)，似乎<code>==</code>和<code>===</code>并没有统一的翻译，且把它们分成”相等”和”全等”好了。</p>
+<h2 id="全等运算符"><a href="#全等运算符" class="headerlink" title="全等运算符"></a>全等运算符</h2><p>判断是否全等的规则：</p>
+<ol>
+<li>如果操作数类型不同，那么不全等。</li>
+<li>如果二者都是<code>null</code>, 全等。</li>
+<li>如果都是<code>undefined</code>, 全等。</li>
+<li>如果其中之一为<code>NaN</code>, 不全等。</li>
+<li>如果二者都为<code>true</code>或<code>false</code>, 全等。</li>
+<li>如果都为数值且值相等，全等。</li>
+<li>如果都为字符串，且值相等，全等。</li>
+<li>如果都指向同一个引用类型，全等。</li>
+<li>其他情况，不全等。</li>
+</ol>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// false, 类型不同#1</span></span><br><span class="line"><span class="number">1</span> === <span class="string">'1'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// fasle, #4</span></span><br><span class="line"><span class="literal">NaN</span> === <span class="literal">NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// false, 虽然都是空对象，但不是同一个引用类型值</span></span><br><span class="line">[] === []</span><br><span class="line"></span><br><span class="line"><span class="comment">// true, 同一个引用类型值</span></span><br><span class="line"><span class="keyword">var</span> firstObject = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> secondObject = firstObject</span><br><span class="line">secondObject[<span class="string">'name'</span>] = <span class="string">'Neo'</span></span><br><span class="line">secondObject === firstObject</span><br></pre></td></tr></table></figure>
+<h2 id="引用类型转换成基本类型"><a href="#引用类型转换成基本类型" class="headerlink" title="引用类型转换成基本类型"></a>引用类型转换成基本类型</h2><p>在之前的加法运算符里面也提到过引用类型到基本类型的转换，过程大致如下：</p>
+<ul>
+<li>先调用<code>valueOf</code>方法，如果返回的是基本类型值，转换结束。</li>
+<li>如果没有得到基本类型值，就调用<code>toString</code>方法。如果返回基本类型值，转换结束。</li>
+<li>否则，抛出错误：<code>TypeError: Cannot convert object to primitive value</code></li>
+</ul>
+<p>大多数的原生对象在调用<code>valueOf</code>方法的时候都会返回对象自身，所以大多数时候其实都会调用<code>toString</code>方法。</p>
+<p><code>Date</code>对象比较特殊，它的<code>valueOf</code>方法返回的是毫秒数，在转换成基本类型值的时候直接调用<code>toString</code>方法。</p>
+<h2 id="相等运算符"><a href="#相等运算符" class="headerlink" title="相等运算符"></a>相等运算符</h2><p>判断是否相等的规则：</p>
+<ol>
+<li>如果操作数类型一致，且满足全等的条件，则相等，否则不相等。</li>
+<li>如果操作数类型不一致：<ol>
+<li>如果一个是<code>null</code>, 另一个是<code>undefined</code>, 相等。</li>
+<li>如果一个是数字，另一个是字符串，把字符串转换成数字再比较。</li>
+<li>如果一个是布尔值，把<code>true</code>转成1, <code>false</code>转成0, 然后再比较。</li>
+<li>如果一个是对象，另一个是数字或者字符串，把对象转成基本类型值再比较。</li>
+</ol>
+</li>
+<li>其他情况，不相等。</li>
+</ol>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="literal">true</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>根据条件2.3，把<code>true</code>转成1。</li>
+<li>然后两个操作数类型一致，满足条件1，使用全等比较。</li>
+<li>都为数值且相等，全等。</li>
+<li>相等。</li>
+</ol>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="number">0</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>根据2.2，把<code>&#39;&#39;</code>转换成数字，即0。</li>
+<li>然后两个操作数类型一致，满足条件1，使用全等比较。</li>
+<li>都为数值且相等，全等。</li>
+<li>相等。</li>
+</ol>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="number">0</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>条件3，属于其他情况，不相等。</p>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<p>条件2.1，相等。</p>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">NaN</span> == <span class="literal">NaN</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>类型一致，转换成全等比较</li>
+<li>NaN === NaN 不成立，因此不全等</li>
+<li>所以不相等</li>
+</ol>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">''</span>] == <span class="string">''</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>条件2.4，先把数组转换成基本类型</li>
+<li>比较<code>&#39;&#39; == &#39;&#39;</code>,类型相同，转成全等比较</li>
+<li>类型相同，且值相同，全等。</li>
+<li>相等。</li>
+</ol>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125; == <span class="literal">true</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>true</code>转换成1，然后对象转换成基本类型值，即<code>&quot;[object Object]&quot; == 1</code></li>
+<li>条件2.2，把字符串转换成数字，得到<code>NaN == 1</code>，类型相同，转成全等比较。</li>
+<li>类型相同，但值不同，所以不全等。</li>
+<li>不相等。</li>
+</ol>
+<p>初看上去，内容非常的繁杂，但是如果碰到的时候就来查一下，很快就能有肌肉记忆了。</p>
+<p>参考：<a href="http://rainsoft.io/the-legend-of-javascript-equality-operator/" target="_blank" rel="external">JavaScript 的等号运算符</a></p>
+<h1 id="JavaScript-的加法运算符"><a href="#JavaScript-的加法运算符" class="headerlink" title="JavaScript 的加法运算符"></a>JavaScript 的加法运算符</h1><p>JavaScript 里面不同的类型做加法之前，需要做各种转换，这里做一个比较完善的总结。</p>
+<h2 id="基本转换规则"><a href="#基本转换规则" class="headerlink" title="基本转换规则"></a>基本转换规则</h2><ul>
+<li><p>运算双方存在对象时</p>
+<ul>
+<li>如果有一个对象，那么先把它转换成基本类型值</li>
+<li>转换之后，如果有字符串，另一个值先转换成字符串，然后再做连接操作</li>
+<li>如果没有，把二者转换成数字再相加</li>
+</ul>
+</li>
+<li><p>如果二者都是基本类型值，先检查是否有字符串类型，如果有就做连接操作；如果没有，就把二者转换成数字相加。</p>
+</li>
+</ul>
+<h2 id="对象转换成基本类型值"><a href="#对象转换成基本类型值" class="headerlink" title="对象转换成基本类型值"></a>对象转换成基本类型值</h2><ul>
+<li>如果是 Date 对象，那么用<code>toString()</code></li>
+<li>其它情况下，用<code>valueOf()</code></li>
+<li>其他情况下(<code>valueOf()</code>不存在或者不返回基本类型值)，那么用<code>toString()</code></li>
+</ul>
+<h2 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h2><h3 id="数字加字符串"><a href="#数字加字符串" class="headerlink" title="数字加字符串"></a>数字加字符串</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="number">1</span> + <span class="string">'5'</span> <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<p>二者都是基本类型值，且有字符串，因此做连接操作。</p>
+<h3 id="数字加数组"><a href="#数字加数组" class="headerlink" title="数字加数组"></a>数字加数组</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>] + <span class="number">1</span> <span class="comment">// "1, 3, 51"</span></span><br></pre></td></tr></table></figure>
+<p>数组是引用类型，先用<code>valueOf()</code>进行转换，但是数组的<code>valueOf()</code>的结果还是原来的数组，所以用<code>toString()</code>方法得到一个字符串<code>&quot;1, 3, 5&quot;</code>；然后是一个字符串加一个数字，做连接操作。</p>
+<h3 id="数字加-boolean"><a href="#数字加-boolean" class="headerlink" title="数字加 boolean"></a>数字加 boolean</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="number">10</span> + <span class="literal">true</span> <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
+<p>二者都是基本类型值，且没有字符串，所以把<code>true</code>转换成数字相加。</p>
+<h3 id="数字加对象"><a href="#数字加对象" class="headerlink" title="数字加对象"></a>数字加对象</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="number">15</span> + &#123;&#125; <span class="comment">// "15[object Object]"</span></span><br></pre></td></tr></table></figure>
+<p>首先对对象做转换，对象的<code>valueOf</code>还是自身，所以用<code>toString()</code>来转换，<code>{}.toString()</code>的结果是<code>&quot;[object Object]&quot;</code>,所以最后的结果就是<code>&quot;15[object Object]&quot;</code>。</p>
+<h3 id="数字加-null"><a href="#数字加-null" class="headerlink" title="数字加 null"></a>数字加 null</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="number">8</span> + <span class="literal">null</span> <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+<p>null 转为0，再做加法运算。</p>
+<h3 id="字符串加-null"><a href="#字符串加-null" class="headerlink" title="字符串加 null"></a>字符串加 null</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="string">"queen"</span> + <span class="literal">null</span> <span class="comment">// "queennull"</span></span><br></pre></td></tr></table></figure>
+<h3 id="数字加-undefined"><a href="#数字加-undefined" class="headerlink" title="数字加 undefined"></a>数字加 <code>undefined</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="number">12</span> + <span class="literal">undefined</span> <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+<p>把<code>undefined</code>转换成数字，得到<code>NaN</code>,因此加法的结果就是<code>NaN</code>。</p>
+<h3 id=""><a href="#" class="headerlink" title="[] + {}"></a>[] + {}</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = [] + &#123;&#125; <span class="comment">// "[object Object]"</span></span><br></pre></td></tr></table></figure>
+<p>二者都是对象，而且二者的<code>valueOf</code>方法的结果都是自身，所以要调用<code>toString</code>方法。空数组调用的结果是个空字符串，空对象调用的结果是<code>&quot;[object Object]&quot;</code>, 字符串连接之后的结果就是<code>&quot;[object Object]&quot;</code>。</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title="{} + []"></a>{} + []</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = &#123;&#125; + [] <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p>在这里，<code>{}</code>被解析成一个空的 block,因此实际上解析成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="comment">// empty block &#125;</span></span><br><span class="line">+ []</span><br></pre></td></tr></table></figure>
+<p>就是把一个空数组转换成数值，调用<code>valueOf</code>之后还是自身，因此调用<code>toString</code>, 得到一个空字符串，转换成数字0。</p>
+<p>参考：</p>
+<ul>
+<li><a href="http://rainsoft.io/javascriptss-addition-operator-demystified/#cr-2" target="_blank" rel="external">详解 JavaScript 的加法运算符</a></li>
+<li><a href="https://www.zhihu.com/question/45478070" target="_blank" rel="external">JS中{}+[]和[]+{}的返回值情况是怎样的</a></li>
+</ul>
 
       
     </div>
@@ -340,7 +515,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ECMAScript/" rel="tag">#ECMAScript</a>
+            <a href="/tags/坑/" rel="tag">#坑</a>
           
         </div>
       
@@ -433,7 +608,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -489,7 +664,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML中的-attribute-和-property"><span class="nav-number">1.</span> <span class="nav-text">HTML中的 attribute 和 property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名字不一致"><span class="nav-number">1.2.1.</span> <span class="nav-text">名字不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型不一致"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义不一致"><span class="nav-number">1.2.3.</span> <span class="nav-text">语义不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持单向关系"><span class="nav-number">1.2.4.</span> <span class="nav-text">保持单向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊场景"><span class="nav-number">1.3.</span> <span class="nav-text">特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mutation"><span class="nav-number">1.3.1.</span> <span class="nav-text">mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-element"><span class="nav-number">1.3.2.</span> <span class="nav-text">custom element</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URI-编码"><span class="nav-number">1.4.</span> <span class="nav-text">URI 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURI"><span class="nav-number">1.4.1.</span> <span class="nav-text">encodeURI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encodeURIComponent"><span class="nav-number">1.4.2.</span> <span class="nav-text">encodeURIComponent</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML中的-attribute-和-property"><span class="nav-number">1.</span> <span class="nav-text">HTML中的 attribute 和 property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区别"><span class="nav-number">1.2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名字不一致"><span class="nav-number">1.2.1.</span> <span class="nav-text">名字不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型不一致"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义不一致"><span class="nav-number">1.2.3.</span> <span class="nav-text">语义不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持单向关系"><span class="nav-number">1.2.4.</span> <span class="nav-text">保持单向关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊场景"><span class="nav-number">1.3.</span> <span class="nav-text">特殊场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mutation"><span class="nav-number">1.3.1.</span> <span class="nav-text">mutation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-element"><span class="nav-number">1.3.2.</span> <span class="nav-text">custom element</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URI-编码"><span class="nav-number">2.</span> <span class="nav-text">URI 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#encodeURI"><span class="nav-number">2.1.</span> <span class="nav-text">encodeURI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encodeURIComponent"><span class="nav-number">2.2.</span> <span class="nav-text">encodeURIComponent</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Date-对象"><span class="nav-number">3.</span> <span class="nav-text">Date 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#比较日期"><span class="nav-number">3.1.</span> <span class="nav-text">比较日期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#稀疏数组和密集数组"><span class="nav-number">4.</span> <span class="nav-text">稀疏数组和密集数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组空位元素的处理"><span class="nav-number">4.1.</span> <span class="nav-text">数组空位元素的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-的等号运算符"><span class="nav-number">5.</span> <span class="nav-text">JavaScript 的等号运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全等运算符"><span class="nav-number">5.1.</span> <span class="nav-text">全等运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">5.1.1.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用类型转换成基本类型"><span class="nav-number">5.2.</span> <span class="nav-text">引用类型转换成基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相等运算符"><span class="nav-number">5.3.</span> <span class="nav-text">相等运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举例-1"><span class="nav-number">5.3.1.</span> <span class="nav-text">举例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-的加法运算符"><span class="nav-number">6.</span> <span class="nav-text">JavaScript 的加法运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本转换规则"><span class="nav-number">6.1.</span> <span class="nav-text">基本转换规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象转换成基本类型值"><span class="nav-number">6.2.</span> <span class="nav-text">对象转换成基本类型值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例-2"><span class="nav-number">6.3.</span> <span class="nav-text">举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加字符串"><span class="nav-number">6.3.1.</span> <span class="nav-text">数字加字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加数组"><span class="nav-number">6.3.2.</span> <span class="nav-text">数字加数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加-boolean"><span class="nav-number">6.3.3.</span> <span class="nav-text">数字加 boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加对象"><span class="nav-number">6.3.4.</span> <span class="nav-text">数字加对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加-null"><span class="nav-number">6.3.5.</span> <span class="nav-text">数字加 null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串加-null"><span class="nav-number">6.3.6.</span> <span class="nav-text">字符串加 null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字加-undefined"><span class="nav-number">6.3.7.</span> <span class="nav-text">数字加 undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">6.3.8.</span> <span class="nav-text">[] + {}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">6.3.9.</span> <span class="nav-text">{} + []</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
