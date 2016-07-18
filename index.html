@@ -538,6 +538,107 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/03/webpack/" itemprop="url">
+                  webpack 使用指南
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-03T12:39:57+08:00" content="2016-06-03">
+              2016-06-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><h2 id="CommonsChunkPlugin"><a href="#CommonsChunkPlugin" class="headerlink" title="CommonsChunkPlugin"></a>CommonsChunkPlugin</h2><p>顾名思义，CommonChunk 插件的作用就是提取代码中的公共模块，然后将公共模块打包到一个独立的文件中去，以便在其它的入口和模块中使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello from a'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// b.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello from b'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// c.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello from c'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>);</span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</span><br><span class="line"><span class="keyword">var</span> c = <span class="built_in">require</span>(<span class="string">'./c'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// main2.js</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>);</span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</span><br></pre></td></tr></table></figure>
+<p>有如上所示的代码依赖结构，显然<code>main.js</code>和<code>main2.js</code>的依赖有重合的部分，与其分别引用，不如合并在一起：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: <span class="string">'main.js'</span>,</span><br><span class="line">    main2: <span class="string">'main2.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.[name].js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(<span class="string">'common.js'</span>, [<span class="string">'main'</span>, <span class="string">'main2'</span>])</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一来得到的结果就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Hash: d0d0443f1f56fe774155</span><br><span class="line">Version: webpack 1.13.1</span><br><span class="line">Time: 104ms</span><br><span class="line">          Asset       Size  Chunks             Chunk Names</span><br><span class="line">bundle.main1.js  373 bytes       0  [emitted]  main1</span><br><span class="line">bundle.main2.js  193 bytes       1  [emitted]  main2</span><br><span class="line">      common.js    3.81 kB       2  [emitted]  common.js</span><br><span class="line">   [0] ./main.js 115 bytes &#123;0&#125; [built]</span><br><span class="line">   [0] ./main2.js 77 bytes &#123;1&#125; [built]</span><br><span class="line">   [1] ./a.js 57 bytes &#123;2&#125; [built]</span><br><span class="line">   [2] ./b.js 57 bytes &#123;2&#125; [built]</span><br><span class="line">   [3] ./c.js 57 bytes &#123;0&#125; [built]</span><br></pre></td></tr></table></figure>
+<p>文档：<a href="https://github.com/webpack/docs/wiki/optimization#multi-page-app" target="_blank" rel="external">Multi-Page-App</a></p>
+<h2 id="DllPlugin"><a href="#DllPlugin" class="headerlink" title="DllPlugin"></a>DllPlugin</h2><p><a href="https://segmentfault.com/a/1190000005969643" target="_blank" rel="external">https://segmentfault.com/a/1190000005969643</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/02/gitbook-doc/" itemprop="url">
                   Gitbook 使用手册
                 </a>
@@ -852,7 +953,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -862,7 +963,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
